@@ -254,7 +254,7 @@ class AttributeImplementation extends AbstractArrayFusionObject
         // Cleanup attributes: remove null values
         $attributes = array_filter(
             $attributes,
-            fn($value) => $value !== null && $value !== '',
+            fn ($value) => $value !== null && $value !== '',
         );
 
         return $attributes;
@@ -453,7 +453,7 @@ class AttributeImplementation extends AbstractArrayFusionObject
     private function checkIfIconExists(string $group, string $icon): bool
     {
         $path = sprintf(
-            'resource://Carbon.Fontawesome/Public/Icons/%s/%s.svg',
+            'resource://Carbon.Fontawesome.Icons/Public/%s/%s.svg',
             $group,
             $icon,
         );
@@ -701,7 +701,7 @@ class AttributeImplementation extends AbstractArrayFusionObject
             return trim($value, " \n\r\t\v\0'\"");
         }
         if (is_array($value)) {
-            return array_map(fn($item) => $this->trim($item), $value);
+            return array_map(fn ($item) => $this->trim($item), $value);
         }
         return $value;
     }
