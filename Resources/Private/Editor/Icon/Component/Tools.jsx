@@ -127,7 +127,8 @@ export default function Tools({
                                     panel
                                     key={name}
                                     title={i18nRegistry.translate(`Carbon.Fontawesome:Main:animation.${name}`)}
-                                    icon={`solid:${icon}:animation:${className}`}
+                                    icon={`solid:${icon}`}
+                                    animationOnHover={name}
                                     onClick={() =>
                                         setCurrentSettings((prev) => ({
                                             ...prev,

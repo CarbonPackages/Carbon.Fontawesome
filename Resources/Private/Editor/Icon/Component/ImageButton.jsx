@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import * as stylex from "@stylexjs/stylex";
 import Icon from "./Icon";
 
@@ -41,16 +41,26 @@ const styles = stylex.create({
     },
 });
 
-export default function ImageButton({ icon, title, onClick, panel = false, label, disabled }) {
+export default function ImageButton({ icon, title, onClick, panel = false, label, disabled, animationOnHover = null }) {
+    const [animation, setAnimation] = useState(null);
     return (
         <button
             type="button"
             title={title}
             onClick={onClick}
+            onMouseEnter={() => {
+                if (animationOnHover) {
+                    // Trigger animation on hover
+                    setAnimation(animationOnHover);
+                }
+            }}
+            onMouseLeave={() => {
+                setAnimation(null);
+            }}
             disabled={disabled}
             {...stylex.props(styles.button, panel && styles.panelButton)}
         >
-            <Icon icon={icon} maxHeight={panel ? 20 : null} />
+            <Icon icon={icon} maxHeight={panel ? 20 : null} animation={animation} />
             {label && <span {...stylex.props(styles.label)}>{label}</span>}
         </button>
     );
