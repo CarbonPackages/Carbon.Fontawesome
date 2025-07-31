@@ -1,0 +1,85 @@
+:root {
+  --fa-icon-layers-width: 1.25em;
+  --fa-icon-layers-ratio: 1;
+}
+
+.fa-icon-layers {
+  display: inline-grid;
+  grid-template:
+    ". . ." minmax(0, 1fr)
+    ". i . " auto
+    ". . ." minmax(0, 1fr) / minmax(0, 1fr) minmax(0, var(--fa-icon-layers-width)) minmax(0, 1fr);
+  align-items: center;
+  justify-items: center;
+}
+
+:is(.fa-icon-layers > *) {
+  grid-area: i;
+  isolation: isolate;
+}
+
+.fa-icon-layers svg {
+  width: var(--fa-icon-layers-width);
+  aspect-ratio: var(--fa-icon-layers-ratio);
+  display: inline-block;
+}
+
+.fa-icon-layers-counter,
+.fa-icon-layers-text {
+  display: inline-flex;
+  text-align: center;
+}
+
+.fa-icon-layers-text {
+  transform: translate(-50%, -50%);
+  transform-origin: center center;
+}
+
+.fa-icon-layers-counter {
+  background-color: var(--fa-icon-counter-background-color, #ff253a);
+  border-radius: var(--fa-icon-counter-border-radius, 1em);
+  box-sizing: border-box;
+  color: var(--fa-icon-inverse, #fff);
+  line-height: var(--fa-icon-counter-line-height, 1);
+  max-width: var(--fa-icon-counter-max-width, 5em);
+  min-width: var(--fa-icon-counter-min-width, 1.5em);
+  overflow: hidden;
+  padding: var(--fa-icon-counter-padding, 0.25em 0.5em);
+  text-overflow: ellipsis;
+  transform: scale(var(--fa-icon-counter-scale, 0.25));
+  align-self: self-start;
+  justify-self: flex-end;
+  transform-origin: top right;
+
+  &:empty {
+    aspect-ratio: 1;
+  }
+}
+
+.fa-icon-layers-bottom-right {
+  justify-self: end;
+  align-self: flex-end;
+  transform: scale(var(--fa-icon-layers-scale, 0.25));
+  transform-origin: bottom right;
+}
+
+.fa-icon-layers-bottom-left {
+  justify-self: end;
+  align-self: flex-start;
+  transform: scale(var(--fa-icon-layers-scale, 0.25));
+  transform-origin: bottom left;
+}
+
+.fa-icon-layers-top-right {
+  justify-self: start;
+  align-self: flex-end;
+  transform: scale(var(--fa-icon-layers-scale, 0.25));
+  transform-origin: top right;
+}
+
+.fa-icon-layers-top-left {
+  justify-self: start;
+  align-self: flex-start;
+  transform: scale(var(--fa-icon-layers-scale, 0.25));
+  transform-origin: top left;
+}

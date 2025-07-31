@@ -1,0 +1,19 @@
+Neos:
+  Neos:
+    userInterface:
+      translation:
+        autoInclude:
+          Carbon.Fontawesome:
+            - 'Main'
+    Ui:
+      resources:
+        javascript:
+          Carbon.Fontawesome:
+            resource: resource://Carbon.Fontawesome/Public/Editor/Main.js
+            attributes:
+              type: 'module'
+        stylesheets:
+          Carbon.Fontawesome.Editor:
+            resource: resource://Carbon.Fontawesome/Public/Editor/Main.css
+          Carbon.Fontawesome.Styles:
+            resource: resource://Carbon.Fontawesome/Public/Styles/Main.css

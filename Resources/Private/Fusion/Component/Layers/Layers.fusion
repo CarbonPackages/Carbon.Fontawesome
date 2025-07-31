@@ -1,0 +1,85 @@
+prototype(Carbon.Fontawesome:Layers) < prototype(Neos.Fusion:Component) {
+    @propTypes {
+        tagName = ${PropTypes.string.isRequired}
+        content = ${PropTypes.string}
+        settings = ${PropTypes.anyOf( PropTypes.string, PropTypes.arrayOf( PropTypes.string ) )}
+    }
+
+    tagName = 'figure'
+    settings = null
+    content = null
+
+    @if.hasContent = ${this.content && this.tagName}
+
+    renderer = Carbon.Fontawesome:OptionalWrapperTag {
+        outerTagName = 'div'
+        innerTagName = ${props.tagName}
+        attributes = Carbon.Fontawesome:Attributes {
+            isIcon = false
+            baseClass = 'fa-icon-layers'
+            attributes = ${props}
+            settings = ${props.settings}
+        }
+        content = ${props.content}
+    }
+
+    @styleguide {
+        title = 'Layering Font Awesome Icons, Text & Counters'
+        description = 'Layers are the new way to place icons and text visually on top of each other'
+        hidePropsInInspector = ${['content']}
+        props = Neos.Fusion:DataStructure {
+            style = ${{fontSize: '15rem', marginTop: '10rem', marginInline: 'auto'}}
+            content = afx`
+                <Carbon.Fontawesome:Icon icon="solid:envelope" />
+                <Carbon.Fontawesome:Layers.Counter />
+            `
+        }
+        useCases {
+            bigFront {
+                title = 'Big Icon in Front'
+                props {
+                    style = 'fontSize:20rem;margin-top:10rem'
+                    content = afx`
+                        <Carbon.Fontawesome:Icon icon="solid:camera:scale:-6" />
+                        <Carbon.Fontawesome:Icon icon="solid:ban:color:tomato" />
+                    `
+                }
+            }
+            bookmark {
+                title = 'Bookmark'
+                props {
+                    size = '10x'
+                    style = ${{fontSize: '20rem', marginTop: '10rem'}}
+                    content = afx`
+                        <Carbon.Fontawesome:Icon icon="solid:bookmark" />
+                        <Carbon.Fontawesome:Icon icon="solid:heart:inverse,scale:-10,translateY:-3" />
+                    `
+                }
+            }
+            triangle {
+                title = 'Sun, Moon & Star in a triangle'
+                props {
+                    size = '10x'
+                    style = ${{fontSize: '20rem', marginTop: '10rem'}}
+                    content = afx`
+                        <Carbon.Fontawesome:Icon icon="solid:play:rotate:-90" />
+                        <Carbon.Fontawesome:Icon icon="solid:sun:inverse,shrink:11,up:5" />
+                        <Carbon.Fontawesome:Icon icon="solid:moon:inverse,shrink:11,down:10,left:8" />
+                        <Carbon.Fontawesome:Icon icon="solid:star:inverse,shrink:11,down:10,right:8" />
+                    `
+                }
+            }
+            calendar {
+                title = 'Calendar with a date'
+                props {
+                    tagName = 'div'
+                    style = ${{fontSize: '20rem', marginTop: '10rem'}}
+                    content = afx`
+                        <Carbon.Fontawesome:Icon icon="solid:calendar" />
+                        <Carbon.Fontawesome:Layers.Text content="27" style={{fontSize: "0.5em"}} tagName="p" settings="down:4,inverse" />
+                    `
+                }
+            }
+        }
+    }
+}

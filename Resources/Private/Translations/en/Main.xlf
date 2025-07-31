@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file original="" product-name="Carbon.Fontawesome" source-language="en" datatype="plaintext">
+        <body>
+            <trans-unit id="noIconSelected" xml:space="preserve">
+                <source>No icon selected</source>
+            </trans-unit>
+            <trans-unit id="editIcon" xml:space="preserve">
+                <source>Edit icon</source>
+            </trans-unit>
+            <trans-unit id="resetIcon" xml:space="preserve">
+                <source>Reset icon</source>
+            </trans-unit>
+            <group id="numberOfIcons" restype="x-gettext-plurals">
+                <trans-unit id="numberOfIcons[0]" xml:space="preserve">
+                    <source>{0} icon</source>
+                </trans-unit>
+                <trans-unit id="numberOfIcons[1]" xml:space="preserve">
+                    <source>{0} icons</source>
+                </trans-unit>
+            </group>
+            <trans-unit id="search" xml:space="preserve">
+                <source>Search</source>
+            </trans-unit>
+            <trans-unit id="searchNumberOfIcons" xml:space="preserve">
+                <source>Search {total} icons…</source>
+            </trans-unit>
+            <trans-unit id="currentIcon" xml:space="preserve">
+                <source>Current icon</source>
+            </trans-unit>
+            <trans-unit id="iconPacks" xml:space="preserve">
+                <source>Icon packs</source>
+            </trans-unit>
+            <trans-unit id="style" xml:space="preserve">
+                <source>Style</source>
+            </trans-unit>
+            <trans-unit id="categories" xml:space="preserve">
+                <source>Categories</source>
+            </trans-unit>
+            <trans-unit id="viewMore" xml:space="preserve">
+                <source>View more</source>
+            </trans-unit>
+            <trans-unit id="help" xml:space="preserve">
+                <source>With - (without space) a term can be excluded, with + the exact search term is used.</source>
+            </trans-unit>
+            <trans-unit id="notFound" xml:space="preserve">
+                <source>No icons where found</source>
+            </trans-unit>
+            <trans-unit id="showAnimationOptions" xml:space="preserve">
+                <source>Show animation options</source>
+            </trans-unit>
+            <trans-unit id="showStylingTools" xml:space="preserve">
+                <source>Show styling tools</source>
+            </trans-unit>
+            <trans-unit id="rotate" xml:space="preserve">
+                <source>Rotate</source>
+            </trans-unit>
+            <trans-unit id="rotateUnit" xml:space="preserve">
+                <source> degree</source>
+            </trans-unit>
+            <trans-unit id="resetStyling" xml:space="preserve">
+                <source>Reset styling</source>
+            </trans-unit>
+            <trans-unit id="resetRotation" xml:space="preserve">
+                <source>Reset rotation</source>
+            </trans-unit>
+            <trans-unit id="flip" xml:space="preserve">
+                <source>Flip</source>
+            </trans-unit>
+            <trans-unit id="flip.vertical" xml:space="preserve">
+                <source>Flip vertically</source>
+            </trans-unit>
+            <trans-unit id="flip.horizontal" xml:space="preserve">
+                <source>Flip horizontally</source>
+            </trans-unit>
+            <trans-unit id="flip.both" xml:space="preserve">
+                <source>Flip horizontally and vertically</source>
+            </trans-unit>
+            <trans-unit id="animation.none" xml:space="preserve">
+                <source>No animation</source>
+            </trans-unit>
+            <trans-unit id="animation.beat" xml:space="preserve">
+                <source>Heart beat</source>
+            </trans-unit>
+            <trans-unit id="animation.beat-fade" xml:space="preserve">
+                <source>Heart beat with fade</source>
+            </trans-unit>
+            <trans-unit id="animation.bounce" xml:space="preserve">
+                <source>Bounce</source>
+            </trans-unit>
+            <trans-unit id="animation.fade" xml:space="preserve">
+                <source>Fade</source>
+            </trans-unit>
+            <trans-unit id="animation.flip" xml:space="preserve">
+                <source>Flip</source>
+            </trans-unit>
+            <trans-unit id="animation.shake" xml:space="preserve">
+                <source>Shake</source>
+            </trans-unit>
+            <trans-unit id="animation.spin" xml:space="preserve">
+                <source>Spin</source>
+            </trans-unit>
+            <trans-unit id="animation.spin-reverse" xml:space="preserve">
+                <source>Reverse spin</source>
+            </trans-unit>
+            <trans-unit id="animation.spin-pulse" xml:space="preserve">
+                <source>Step-by-step rotation</source>
+            </trans-unit>
+            <trans-unit id="animation.spin-pulse-reverse" xml:space="preserve">
+                <source>Reverse step-by-step rotation</source>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

@@ -1,0 +1,29 @@
+/*
+ * This processor replaces icon placeholder in the form [icon:IconDefinition] with icons.
+ * Example: [icon:solid:tennis-ball] will be replaced with an icon element.
+ * To define the size of the icon, you can use [icon-1.5:solid:tennis-ball] for a 1.5em sized icon.
+ * Font sizes smaller than 0.1em will be ignored.
+ */
+prototype(Carbon.Fontawesome:Processor) {
+    @class = 'Carbon\\Fontawesome\\FusionObjects\\ProcessorImplementation'
+
+    @if.enable = ${!node.context.inBackend}
+
+    /// string
+    content = ${value}
+
+    /// boolean If set to false, the icon will not be rendered and the input will be erased
+    renderIcon = true
+
+    iconRenderer = Carbon.Fontawesome:Icon {
+        layers.tagName = 'span'
+        icon = ${icon}
+        wrapper {
+            tagName = 'span'
+            attributes {
+                class = 'fa-icon-intext'
+                style = ${size ? 'font-size:' + size + 'em' : null}
+            }
+        }
+    }
+}

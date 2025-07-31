@@ -1,0 +1,170 @@
+:where(.fa-icon-beat, .fa-icon-bounce, .fa-icon-beat-fade, .fa-icon-fade, .fa-icon-flip, .fa-icon-shake, .fa-icon-spin, .fa-icon-spin-pulse) {
+  animation: var(--fa-icon-animation-name, none) var(--fa-icon-animation-duration, 1s) var(--fa-icon-animation-timing, ease-in-out) var(--fa-icon-animation-delay, 0s) var(--fa-icon-animation-iteration-count, infinite) var(--fa-icon-animation-direction, normal)
+    var(--fa-icon-animation-play-state, running) var(--fa-icon-animation-timeline, none);
+}
+
+.fa-icon-beat {
+  --fa-icon-animation-name: fa-icon-beat;
+}
+
+.fa-icon-bounce {
+  --fa-icon-animation-name: fa-icon-bounce;
+
+  animation-timing-function: var(--fa-icon-animation-timing, cubic-bezier(0.28, 0.84, 0.42, 1));
+}
+
+.fa-icon-fade,
+.fa-icon-beat-fade {
+  --fa-icon-animation-name: fa-icon-fade;
+
+  animation-timing-function: var(--fa-icon-animation-timing, cubic-bezier(0.4, 0, 0.6, 1));
+}
+
+.fa-icon-beat-fade {
+  --fa-icon-animation-name: fa-icon-beat-fade;
+}
+
+.fa-icon-flip {
+  --fa-icon-animation-name: fa-icon-flip;
+}
+
+.fa-icon-shake,
+.fa-icon-spin {
+  --fa-icon-animation-name: fa-icon-shake;
+
+  animation-timing-function: var(--fa-icon-animation-timing, linear);
+}
+
+.fa-icon-spin {
+  --fa-icon-animation-name: fa-icon-spin;
+
+  animation-duration: var(--fa-icon-animation-duration, 2s);
+}
+
+.fa-icon-spin-reverse {
+  animation-direction: var(--fa-icon-animation-direction, reverse);
+}
+
+.fa-icon-spin-pulse {
+  --fa-icon-animation-name: fa-icon-spin;
+
+  animation-timing-function: var(--fa-icon-animation-timing, steps(8));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fa-icon-beat,
+  .fa-icon-bounce,
+  .fa-icon-fade,
+  .fa-icon-beat-fade,
+  .fa-icon-flip,
+  .fa-icon-pulse,
+  .fa-icon-shake,
+  .fa-icon-spin,
+  .fa-icon-spin-pulse {
+    animation-delay: -1ms;
+    animation-duration: 1ms;
+    animation-iteration-count: 1;
+    transition-delay: 0s;
+    transition-duration: 0s;
+  }
+}
+
+@keyframes fa-icon-beat {
+  0%,
+  90% {
+    transform: scale(1);
+  }
+  45% {
+    transform: scale(var(--fa-icon-beat-scale, 1.25));
+  }
+}
+
+@keyframes fa-icon-bounce {
+  0% {
+    transform: scale(1, 1) translateY(0);
+  }
+  10% {
+    transform: scale(var(--fa-icon-bounce-start-scale-x, 1.1), var(--fa-icon-bounce-start-scale-y, 0.9)) translateY(0);
+  }
+  30% {
+    transform: scale(var(--fa-icon-bounce-jump-scale-x, 0.9), var(--fa-icon-bounce-jump-scale-y, 1.1)) translateY(var(--fa-icon-bounce-height, -50%));
+  }
+  50% {
+    transform: scale(var(--fa-icon-bounce-land-scale-x, 1.05), var(--fa-icon-bounce-land-scale-y, 0.95)) translateY(0);
+  }
+  57% {
+    transform: scale(1, 1) translateY(var(--fa-icon-bounce-rebound, -0.125%));
+  }
+  64% {
+    transform: scale(1, 1) translateY(0);
+  }
+  100% {
+    transform: scale(1, 1) translateY(0);
+  }
+}
+
+@keyframes fa-icon-fade {
+  50% {
+    opacity: var(--fa-icon-fade-opacity, 0.4);
+  }
+}
+
+@keyframes fa-icon-beat-fade {
+  0%,
+  100% {
+    opacity: var(--fa-icon-beat-fade-opacity, 0.4);
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(var(--fa-icon-beat-fade-scale, 1.125));
+  }
+}
+
+@keyframes fa-icon-flip {
+  50% {
+    transform: rotate3d(var(--fa-icon-flip-x, 0), var(--fa-icon-flip-y, 1), var(--fa-icon-flip-z, 0), var(--fa-icon-flip-angle, -180deg));
+  }
+}
+
+@keyframes fa-icon-shake {
+  0% {
+    transform: rotate(-15deg);
+  }
+  4% {
+    transform: rotate(15deg);
+  }
+  8%,
+  24% {
+    transform: rotate(-18deg);
+  }
+  12%,
+  28% {
+    transform: rotate(18deg);
+  }
+  16% {
+    transform: rotate(-22deg);
+  }
+  20% {
+    transform: rotate(22deg);
+  }
+  32% {
+    transform: rotate(-12deg);
+  }
+  36% {
+    transform: rotate(12deg);
+  }
+  40%,
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes fa-icon-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

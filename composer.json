@@ -1,0 +1,20 @@
+{
+    "name": "carbon/fontawesome",
+    "description": "Inline Fontawesome Icons into Neos",
+    "type": "neos-carbon",
+    "license": "GPL-3.0-or-later",
+    "require": {
+        "php": "^8.3",
+        "neos/neos": "^8.3 || ^9.0",
+        "carbon/eel": "^2.21",
+        "carbon/fontawesomeicons": "^1.0"
+    },
+    "suggest": {
+        "packagefactory/atomicfusion-proptypes": "Validate the props passed to a component via @propType annotation"
+    },
+    "autoload": {
+        "psr-4": {
+            "Carbon\\Fontawesome\\": "Classes/"
+        }
+    }
+}

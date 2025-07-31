@@ -1,0 +1,345 @@
+# Do not change anything in this file
+# Anything can change in this file without notice
+
+Carbon:
+  Fontawesome:
+    iconConfigMixins:
+      color: &color
+        type: 'string'
+        property: 'color'
+        editor: 'color'
+      label: &label
+        type: 'string'
+        attribute: 'aria-label'
+        removeAttributes:
+          - aria-hidden
+        editor: false
+      fontSize: &fontSize
+        type: 'float'
+        editor: false
+        property: 'font-size'
+        defaultValue: 1
+        min: 0.1
+        append: 'em'
+      opacity: &opacity
+        property: 'opacity'
+        type: 'float'
+        editor: 'range'
+        defaultValue: 1
+        min: 0
+        max: 1
+        step: 0.01
+        unit:
+          append: '%'
+          modifier: 100
+      duration: &duration
+        property: '--fa-icon-animation-duration'
+        type: 'float'
+        defaultValue: 1
+        min: 0.1
+        append: 's'
+      animationGlobal: &animationGlobal
+        delay:
+          property: '--fa-icon-animation-delay'
+          type: 'float'
+          defaultValue: 0
+          min: 0
+          append: 's'
+        duration: *duration
+        direction:
+          property: '--fa-icon-animation-direction'
+          type: 'string'
+          editor: 'select'
+          defaultValue: 'normal'
+          options:
+            - normal
+            - reverse
+            - alternate
+            - alternate-reverse
+        iteration:
+          property: '--fa-icon-animation-iteration-count'
+          type: 'integer'
+          defaultValue: 'infinite'
+          min: 1
+        timing:
+          property: '--fa-icon-animation-timing'
+          type: 'string'
+          editor: false
+
+    iconConfig: &iconConfig
+      global:
+        fixedWidth:
+          type: 'boolean'
+          className: 'fa-icon-fw'
+        border:
+          type: 'boolean'
+          className: 'fa-icon-border'
+        inverse:
+          type: 'boolean'
+          className: 'fa-icon-inverse'
+        size:
+          type: 'string'
+          className:
+            prepend: 'fa-icon-'
+        pull:
+          type: 'string'
+          className:
+            prepend: 'fa-icon-pull-'
+        fontSize: *fontSize
+        color: *color
+        opacity: *opacity
+        label: *label
+        tooltip:
+          <<: *label
+          className: 'fa-icon-pointer-events'
+          addAttributes:
+            x-tooltip: true
+      inText:
+        fontSize: *fontSize
+      transform:
+        rotate:
+          type: 'integer'
+          defaultValue: 0
+          prepend: 'rotate('
+          append: 'deg)'
+        scale:
+          type: 'float'
+          editor: 'range'
+          defaultValue: 0
+          min: -15
+          max: 48
+          step: 0.1
+          prepend: 'scale('
+          append: ')'
+          scaleFraction: 16
+        shrink:
+          type: 'float'
+          editor: false
+          defaultValue: 0
+          prepend: 'scale('
+          append: ')'
+          scaleFraction: -16
+        grow:
+          type: 'float'
+          editor: false
+          defaultValue: 0
+          prepend: 'scale('
+          append: ')'
+          scaleFraction: 16
+        translateY:
+          type: 'float'
+          editor: 'range'
+          defaultValue: 0
+          min: -48
+          max: 48
+          step: 0.1
+          prepend: 'translateY('
+          append: ')'
+          translateFraction: 16
+        translateX:
+          type: 'float'
+          editor: 'range'
+          defaultValue: 0
+          min: -48
+          max: 48
+          step: 0.1
+          prepend: 'translateX('
+          append: ')'
+          translateFraction: 16
+        left:
+          type: 'float'
+          editor: false
+          defaultValue: 0
+          prepend: 'translateX('
+          append: ')'
+          translateFraction: -16
+        right:
+          type: 'float'
+          editor: false
+          defaultValue: 0
+          prepend: 'translateX('
+          append: ')'
+          translateFraction: 16
+        up:
+          type: 'float'
+          editor: false
+          defaultValue: 0
+          prepend: 'translateY('
+          append: ')'
+          translateFraction: -16
+        down:
+          type: 'float'
+          editor: false
+          defaultValue: 0
+          prepend: 'translateY('
+          append: ')'
+          translateFraction: 16
+        flip:
+          type: 'string'
+          valueMap:
+            h: 'scaleX(-1)'
+            v: 'scaleY(-1)'
+            b: 'scale(-1, -1)'
+            horizontal: 'scaleX(-1)'
+            vertical: 'scaleY(-1)'
+            both: 'scale(-1, -1)'
+      duotone:
+        swapOpacity:
+          type: 'boolean'
+          className: 'fa-icon-swap-opacity'
+        primaryOpacity:
+          <<: *opacity
+          property: '--fa-icon-primary-opacity'
+          defaultValue: 1
+        secondaryOpacity:
+          <<: *opacity
+          property: '--fa-icon-secondary-opacity'
+          defaultValue: 0.4
+        primaryColor:
+          <<: *color
+          property: '--fa-icon-primary-color'
+        secondaryColor:
+          <<: *color
+          property: '--fa-icon-secondary-color'
+      animationBeat:
+        <<: *animationGlobal
+        scale: &scale
+          property: '--fa-icon-beat-scale'
+          type: 'float'
+          defaultValue: 1.25
+          min: 0.01
+          unit:
+            append: '%'
+            modifier: 100
+      animationBounce:
+        <<: *animationGlobal
+        startX: &bounce
+          property: '--fa-icon-bounce-start-scale-x'
+          type: 'float'
+          defaultValue: 1.1
+          min: 0
+          unit:
+            append: '%'
+            modifier: 100
+        startY:
+          <<: *bounce
+          property: '--fa-icon-bounce-start-scale-y'
+          defaultValue: 0.9
+        jumpX:
+          <<: *bounce
+          property: '--fa-icon-bounce-jump-scale-x'
+          defaultValue: 0.9
+        jumpY:
+          <<: *bounce
+          property: '--fa-icon-bounce-jump-scale-y'
+          defaultValue: 1.1
+        height:
+          property: '--fa-icon-bounce-height'
+          type: 'integer'
+          editor: 'range'
+          defaultValue: 50
+          min: 1
+          max: 200
+          prepend: '-'
+          append: '%'
+          unit:
+            append: '%'
+        landX:
+          property: '--fa-icon-bounce-land-scale-x'
+          type: 'float'
+          defaultValue: 1.05
+          min: 0
+          unit:
+            append: '%'
+            modifier: 100
+        landY:
+          property: '--fa-icon-bounce-land-scale-y'
+          type: 'float'
+          defaultValue: 0.95
+          min: 0
+          unit:
+            append: '%'
+            modifier: 100
+        rebound:
+          property: '--fa-icon-bounce-rebound'
+          type: 'float'
+          editor: 'range'
+          defaultValue: 0.125
+          min: 0
+          max: 1
+          step: 0.005
+          prepend: '-'
+          append: '%'
+          unit:
+            append: '‰'
+            modifier: 10
+      animationFade:
+        <<: *animationGlobal
+        fadeOpacity:
+          <<: *opacity
+          property: '--fa-icon-fade-opacity'
+          defaultValue: 0.4
+      animationBeatFade:
+        <<: *animationGlobal
+        fadeOpacity:
+          <<: *opacity
+          property: '--fa-icon-beat-fade-opacity'
+          defaultValue: 0.4
+        scale:
+          <<: *scale
+          property: '--fa-icon-beat-fade-scale'
+      animationFlip:
+        <<: *animationGlobal
+        flipX: &flip
+          property: '--fa-icon-flip-x'
+          type: 'float'
+          editor: 'range'
+          defaultValue: 0
+          min: 0
+          max: 1
+          step: 0.01
+          unit:
+            append: '%'
+            modifier: 100
+        flipY:
+          <<: *flip
+          property: '--fa-icon-flip-y'
+          defaultValue: 1
+        flipZ:
+          <<: *flip
+          property: '--fa-icon-flip-z'
+          defaultValue: 0
+        flipAngle:
+          property: '--fa-icon-flip-angle'
+          type: 'integer'
+          defaultValue: -180
+          min: -720
+          max: 720
+          append: 'deg'
+          unit:
+            append: 'deg'
+      animationShake: *animationGlobal
+      animationSpin: &spin
+        <<: *animationGlobal
+        duration:
+          <<: *duration
+          defaultValue: 2
+      animationSpinReverse: *spin
+      animationSpinPulse: &spinPulse
+        <<: *animationGlobal
+        steps:
+          property: '--fa-icon-animation-timing'
+          type: 'integer'
+          editor: 'range'
+          min: 1
+          max: 20
+          prepend: 'steps('
+          append: ')'
+          defaultValue: 8
+      animationSpinPulseReverse: *spinPulse
+
+Neos:
+  Neos:
+    Ui:
+      frontendConfiguration:
+        Carbon.Fontawesome: *iconConfig

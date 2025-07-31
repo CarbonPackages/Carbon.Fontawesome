@@ -1,0 +1,17 @@
+prototype(Carbon.Fontawesome:OptionalWrapperTag) < prototype(Neos.Fusion:Component) {
+    attributes = null
+    content = null
+
+    outerTagName = 'span'
+    innerTagName = 'i'
+
+    renderer = Carbon.Eel:Tag {
+        tagName = ${props.attributes && props.attributes.wrapper ? props.outerTagName : null}
+        attributes = ${props.attributes.wrapper}
+        content = Neos.Fusion:Tag {
+            tagName = ${props.innerTagName}
+            attributes = ${props.attributes.item}
+            content = ${props.content}
+        }
+    }
+}

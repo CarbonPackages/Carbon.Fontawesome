@@ -1,0 +1,5 @@
+prototype(Carbon.Fontawesome:Attributes) {
+    @class = 'Carbon\\Fontawesome\\FusionObjects\\AttributeImplementation'
+
+    attributes = Neos.Fusion:DataStructure
+}

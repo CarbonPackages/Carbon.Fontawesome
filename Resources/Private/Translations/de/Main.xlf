@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file original="" product-name="Carbon.Fontawesome" source-language="en" target-language="de" datatype="plaintext">
+        <body>
+            <trans-unit id="noIconSelected" xml:space="preserve">
+                <source>No icon selected</source>
+                <target>Kein Icon ausgewählt</target>
+            </trans-unit>
+            <trans-unit id="editIcon" xml:space="preserve">
+                <source>Edit icon</source>
+                <target>Icon editieren</target>
+            </trans-unit>
+            <trans-unit id="resetIcon" xml:space="preserve">
+                <source>Reset icon</source>
+                <target>Icon zurücksetzen</target>
+            </trans-unit>
+            <group id="numberOfIcons" restype="x-gettext-plurals">
+                <trans-unit id="numberOfIcons[0]" xml:space="preserve">
+                    <source>{0} icon</source>
+                    <target>{0} Icon</target>
+                </trans-unit>
+                <trans-unit id="numberOfIcons[1]" xml:space="preserve">
+                    <source>{0} icons</source>
+                    <target>{0} Icons</target>
+                </trans-unit>
+            </group>
+            <trans-unit id="search" xml:space="preserve">
+                <source>Search</source>
+                <target>Suche</target>
+            </trans-unit>
+            <trans-unit id="searchNumberOfIcons" xml:space="preserve">
+                <source>Search {total} icons…</source>
+                <target>{total} Icons durchsuchen…</target>
+            </trans-unit>
+            <trans-unit id="currentIcon" xml:space="preserve">
+                <source>Current icon</source>
+                <target>Aktuelles Icon</target>
+            </trans-unit>
+            <trans-unit id="iconPacks" xml:space="preserve">
+                <source>Icon packs</source>
+                <target>Icon Packs</target>
+            </trans-unit>
+            <trans-unit id="style" xml:space="preserve">
+                <source>Style</source>
+                <target>Stil</target>
+            </trans-unit>
+            <trans-unit id="categories" xml:space="preserve">
+                <source>Categories</source>
+                <target>Kategorien</target>
+            </trans-unit>
+            <trans-unit id="viewMore" xml:space="preserve">
+                <source>View more</source>
+                <target>Mehr anzeigen</target>
+            </trans-unit>
+            <trans-unit id="help" xml:space="preserve">
+                <source>With - (without space) a term can be excluded, with + the exact search term is used.</source>
+                <target>Bitte englische Begriffe für die Suche verwenden. Mit - (ohne Leerzeichen) kann ein Begriff ausgeschlossen werden, mit + wird der exakte Suchebegriff verwendet.</target>
+            </trans-unit>
+            <trans-unit id="notFound" xml:space="preserve">
+                <source>No icons where found</source>
+                <target>Es wurden keine Icons gefunden</target>
+            </trans-unit>
+            <trans-unit id="showAnimationOptions" xml:space="preserve">
+                <source>Show animation options</source>
+                <target>Animationsoptionen anzeigen</target>
+            </trans-unit>
+            <trans-unit id="showStylingTools" xml:space="preserve">
+                <source>Show styling tools</source>
+                <target>Styling-Tools anzeigen</target>
+            </trans-unit>
+            <trans-unit id="rotate" xml:space="preserve">
+                <source>Rotate</source>
+                <target>Rotieren</target>
+            </trans-unit>
+            <trans-unit id="rotateUnit" xml:space="preserve">
+                <source> degree</source>
+                <target> Grad</target>
+            </trans-unit>
+            <trans-unit id="resetStyling" xml:space="preserve">
+                <source>Reset styling</source>
+                <target>Styling zurücksetzen</target>
+            </trans-unit>
+            <trans-unit id="resetRotation" xml:space="preserve">
+                <source>Reset rotation</source>
+                <target>Rotation zurücksetzen</target>
+            </trans-unit>
+            <trans-unit id="flip" xml:space="preserve">
+                <source>Flip</source>
+                <target>Spiegeln</target>
+            </trans-unit>
+            <trans-unit id="flip.vertical" xml:space="preserve">
+                <source>Flip vertically</source>
+                <target>Vertikal spiegeln</target>
+            </trans-unit>
+            <trans-unit id="flip.horizontal" xml:space="preserve">
+                <source>Flip horizontally</source>
+                <target>Horizontal spiegeln</target>
+            </trans-unit>
+            <trans-unit id="flip.both" xml:space="preserve">
+                <source>Flip horizontally and vertically</source>
+                <target>Horizontal und vertikal spiegeln</target>
+            </trans-unit>
+            <trans-unit id="animation.none" xml:space="preserve">
+                <source>No animation</source>
+                <target>Keine Animation</target>
+            </trans-unit>
+            <trans-unit id="animation.beat" xml:space="preserve">
+                <source>Heart beat</source>
+                <target>Herzschlag</target>
+            </trans-unit>
+            <trans-unit id="animation.beat-fade" xml:space="preserve">
+                <source>Heart beat with fade</source>
+                <target>Herzschlag mit Ausblendung</target>
+            </trans-unit>
+            <trans-unit id="animation.bounce" xml:space="preserve">
+                <source>Bounce</source>
+                <target>Hüpfen</target>
+            </trans-unit>
+            <trans-unit id="animation.fade" xml:space="preserve">
+                <source>Fade</source>
+                <target>Faden</target>
+            </trans-unit>
+            <trans-unit id="animation.flip" xml:space="preserve">
+                <source>Flip</source>
+                <target>Umdrehen</target>
+            </trans-unit>
+            <trans-unit id="animation.shake" xml:space="preserve">
+                <source>Shake</source>
+                <target>Schütteln</target>
+            </trans-unit>
+            <trans-unit id="animation.spin" xml:space="preserve">
+                <source>Spin</source>
+                <target>drehen</target>
+            </trans-unit>
+            <trans-unit id="animation.spin-reverse" xml:space="preserve">
+                <source>Reverse spin</source>
+                <target>Umgekehrte Drehung</target>
+            </trans-unit>
+            <trans-unit id="animation.spin-pulse" xml:space="preserve">
+                <source>Step-by-step rotation</source>
+                <target>Schrittweise Drehung</target>
+            </trans-unit>
+            <trans-unit id="animation.spin-pulse-reverse" xml:space="preserve">
+                <source>Reverse step-by-step rotation</source>
+                <target>Umgekehrte schrittweise Drehung</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

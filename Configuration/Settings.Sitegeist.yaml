@@ -1,0 +1,9 @@
+Sitegeist:
+  Monocle:
+    ui:
+      structure:
+        'Carbon.Fontawesome':
+          match: Carbon.Fontawesome
+          label: 'Font Awesome'
+          icon: icon-flag
+          color: '#339af0'

@@ -1,0 +1,25 @@
+.fa-icon {
+  .fa-icon-primary {
+    fill: var(--fa-icon-primary-color, currentColor);
+    opacity: var(--fa-icon-primary-opacity, 1);
+  }
+
+  .fa-icon-secondary {
+    fill: var(--fa-icon-secondary-color, currentColor);
+    opacity: var(--fa-icon-secondary-opacity, 0.4);
+  }
+
+  :is(mask .fa-icon-primary, mask .fa-icon-secondary) {
+    fill: black;
+  }
+}
+
+.fa-icon.fa-icon-swap-opacity {
+  .fa-icon-primary {
+    opacity: var(--fa-icon-secondary-opacity, 0.4);
+  }
+
+  .fa-icon-secondary {
+    opacity: var(--fa-icon-primary-opacity, 1);
+  }
+}

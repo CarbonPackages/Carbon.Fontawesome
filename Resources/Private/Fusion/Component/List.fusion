@@ -1,0 +1,61 @@
+prototype(Carbon.Fontawesome:List) < prototype(Neos.Fusion:Component) {
+    @propTypes {
+        tagName = ${PropTypes.oneOf(['ul', 'ol']).isRequired}
+        settings = ${PropTypes.anyOf( PropTypes.string, PropTypes.arrayOf( PropTypes.string ) )}
+    }
+
+    tagName = 'ul'
+    items = null
+
+    @private.attributes = Carbon.Fontawesome:Attributes {
+        isIcon = false
+        baseClass = 'fa-icon-ul'
+        attributes = ${props}
+        settings = ${props.settings}
+    }
+
+    @if.hasItems = ${Carbon.Array.check(this.items)}
+
+    renderer = Neos.Fusion:Tag {
+        tagName = ${props.tagName}
+        attributes = ${private.attributes.item}
+        content = Neos.Fusion:Loop {
+            items = ${props.items}
+            itemRenderer = afx`
+                <li>
+                    <span class="fa-icon-li">
+                        <Carbon.Fontawesome:Icon {...item.icon} />
+                    </span>
+                    {item.content} add
+                </li>
+            `
+        }
+    }
+
+    @styleguide {
+        title = 'Font Awesome Icons in a List'
+        description = 'List icons can be used to replace bullets in lists'
+        props {
+            tagName = 'ol'
+            style = ${{color: '#00adee', fontSize: '4rem', marginTop: '4rem'}}
+            items = Neos.Fusion:DataStructure {
+                1 = Neos.Fusion:DataStructure {
+                    icon = ${{icon: 'solid:square-check'}}
+                    content = 'List icons can'
+                }
+                2 = Neos.Fusion:DataStructure {
+                    icon = ${{icon: 'square-check'}}
+                    content = 'be used to'
+                }
+                3 = Neos.Fusion:DataStructure {
+                    icon = ${{icon: 'duotone:spinner:animation:spinPulse'}}
+                    content = 'replace bullets'
+                }
+                4 = Neos.Fusion:DataStructure {
+                    icon = ${{icon: 'regular:square'}}
+                    content = 'in lists'
+                }
+            }
+        }
+    }
+}

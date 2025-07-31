@@ -1,0 +1,19 @@
+prototype(Carbon.Fontawesome:Layers.Text) < prototype(Neos.Fusion:Component) {
+    content = null
+    settings = null
+    tagName = 'span'
+
+    @if.hasContent = ${this.content}
+
+    renderer = Carbon.Fontawesome:OptionalWrapperTag {
+        outerTagName = ${props.tagName}
+        innerTagName = ${props.tagName}
+        attributes = Carbon.Fontawesome:Attributes {
+            isIcon = false
+            baseClass = 'fa-icon-layers-text'
+            attributes = ${props}
+            settings = ${props.settings}
+        }
+        content = ${props.content}
+    }
+}

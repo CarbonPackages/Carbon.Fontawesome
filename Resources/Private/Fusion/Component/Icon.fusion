@@ -1,0 +1,199 @@
+prototype(Carbon.Fontawesome:Icon) < prototype(Neos.Fusion:Component) {
+    // Icon has style and icon name combined, e.g. 'solid:check'
+    // And also something like 'duotone-solid:check:{animation:spin-reverse,rotate:90,swap-opacity,'primary-color':'red',"secondary-color":"blue"}'
+    // or 'duotone-solid:check:animation:spin-reverse,rotate:90,swap-opacity,'primary-color':'red',"secondary-color":"blue"'
+    // duotone will be converted to duotone-solid
+    // settings props can be camelCase or kebab-case, e.g. 'animation:spin-reverse' or 'animation:spinReverse' / "secondaryColor":"blue" or "secondary-color":"blue"
+    // To create multiple icons, you can seperate them with a double pipe, e.g. 'duotone-solid:heart||solid:check:shrink:8'
+    // This is also possible with an array, e.g. ['duotone-solid:heart', ['solid':'check'], 'solid:check:shrink:8,color:green', 'duotone-solid','check','swap-opacity']
+    // The settings in the strings wins over the settings prop, so you can use the icon string to override the settings for a specific icon
+    /// string|array|DataStructure required
+    icon = null
+
+    // Add here your own shorthand replacements. Do not use `:` in the key
+    replacements = Neos.Fusion:DataStructure {
+        neos-monochrome = 'brands:neos'
+        neos-light = 'duotone-solid:neos:color:#009fe3,secondaryColor:#fff,secondaryOpacity:1'
+        neos-dark = 'duotone-solid:neos:color:#28234c,secondaryColor:#fff,secondaryOpacity:1'
+        neos = 'duotone-solid:neos:color:#28234c,secondaryColor:#009fe3,secondaryOpacity:1'
+        litefyr = 'brands:litefyr:color:#5b22b6'
+    }
+
+    // Add settings from the props below to the icon, e.g. animation:spin-reverse,rotate:90,swapOpacity,'primaryColor':'red',"secondaryColor":"blue"
+    // You can also warap in brackets, e.g. {animation:spin-reverse,rotate:90,swap-opacity,'primary-color':'red',"secondary-color":"blue"}
+    // settings props can be camelCase or kebab-case, e.g. 'animation:spin-reverse' or 'animation:spinReverse' / "secondaryColor":"blue" or "secondary-color":"blue"
+    /// string|DataStructure String as the same as third argument of the icon, or an object with the settings
+    settings = Neos.Fusion:DataStructure {
+        // The settings can have following properties, which will be applied to the icon (Remeber you can mix camelCase and kebab-case):
+        // Some of the settings need the corresponding CSS classes
+
+        // animation: beat, bounce, fade, beat-fade, flip, shake, spin, spin-reverse, spin-pulse, spin-pulse-reverse
+        // size: 2xs, xs, sm, lg, xl, 2xl, 1x, 2x, 3x, 4x, 5x, 6x, 7x, 8x, 9x, 10x
+        // fixedWidth: true|false
+        // pull: left, right
+        // border: true|false
+        // inverse: true|false
+        // stackSize: 1, 2
+        // rotate: integer|float
+        // flip: horizontal, vertical, both
+
+        // FOR DUOTONE ICONS ONLY
+        // swapOpacity: true|false
+        // primaryOpacity: float between 0 and 1, e.g. 0.4
+        // secondaryOpacity: float between 0 and 1, e.g. 0.4
+        // primaryColor: any valid CSS color value, e.g. '#ff0000', 'red', 'rgb(255,0,0)', 'rgba(255,0,0,1), 'var(--my-color)'
+        // secondaryColor: any valid CSS color value, e.g. '#00ff00', 'green', 'rgb(0,255,0)', 'rgba(0,255,0,1), 'var(--my-color)'
+    }
+
+    // Any other props than `icon` and `settings` will be applied to the icon as attributes.
+
+    // Can be a string, array or a DataStructure
+    // Styles can also be written in Javascript style, eg {marginTop: '10vh', height: '80vh'}
+    style = null
+    // Can be a string, array or a DataStructure
+    class = null
+
+    aria-hidden = 'true'
+    focusable = 'false'
+    role = 'img'
+
+    // This is used if multiple icons are provided
+    layers = Neos.Fusion:DataStructure {
+        tagName = 'span'
+        settings = null
+    }
+
+    // Define here a wrapper tag. If tagName is null or empty, no wrapper will be rendered.
+    wrapper = Neos.Fusion:DataStructure {
+        tagName = null
+        attributes = Neos.Fusion:DataStructure
+    }
+
+    @private.attributes = Carbon.Fontawesome:Attributes {
+        isIcon = true
+        baseClass = 'fa-icon'
+        attributes = ${props}
+        icon = ${props.icon}
+        settings = ${props.settings}
+        replacements = ${props.replacements}
+    }
+
+    renderer = Carbon.Eel:Tag {
+        @if.hasIcon = ${private.attributes}
+        tagName = ${props.wrapper.tagName}
+        attributes = ${props.wrapper.attributes}
+        content = Neos.Fusion:Case {
+            multipleIcons {
+                condition = ${private.attributes.multipleIcons}
+                renderer = Carbon.Fontawesome:Layers {
+                    @apply {
+                        props = ${props.layers}
+                        overwrite = Neos.Fusion:DataStructure {
+                            content = Neos.Fusion:Loop {
+                                items = ${private.attributes.items}
+                                itemRenderer = Carbon.Fontawesome:OptionalWrapperTag {
+                                    attributes = ${item}
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            singleIcon {
+                condition = ${private.attributes && private.attributes.item}
+                renderer = Carbon.Fontawesome:OptionalWrapperTag {
+                    attributes = ${private.attributes}
+                }
+            }
+        }
+    }
+
+    @styleguide {
+        title = 'Font Awesome Icon'
+        props {
+            icon = 'solid:tennis-ball'
+            settings = 'animation:spin,duration:3,delay:1,direction:alternate,iteration:5,timing:easeInOut'
+            style = ${{marginTop: '24vh', height: '50vh'}}
+            aria-label = 'Tennis Ball Icon'
+            aria-hidden = false
+        }
+        useCases {
+            duotone {
+                title = 'Duotone Icon'
+                props {
+                    icon = 'duotone-regular:heart:animation:beatFade,primaryColor:orange,secondary-color:red,swap-opacity'
+                    style = 'height:50vh;marginTop:25vh;'
+                }
+            }
+            multipleIcons {
+                title = 'Multiple Icons (string)'
+                props {
+                    icon = 'duotone-solid:heart:swap-opacity,color:red,animation:beatFade||solid:check:shrink:4||solid:comment:up:12,right:16,shrink:4'
+                    layers = Neos.Fusion:DataStructure {
+                        tagName = 'div'
+                        style = 'fontSize:10rem;marginTop:25vh;'
+                        aria-label = 'Multiple Icons'
+                    }
+                }
+            }
+            multipleIconsWithArray {
+                title = 'Multiple Icons (array)'
+                props {
+                    icon = Neos.Fusion:DataStructure {
+                        triangle = 'solid:play:rotate:-90'
+                        sun = ${['solid', 'sun', 'inverse,shrink:11,up:5']}
+                        moon {
+                            settings {
+                                inverse = true
+                                shrink = 11
+                                down = 10
+                                left = 8
+                            }
+                            icon = 'moon'
+                            group = 'solid'
+                        }
+                        star = ${['solid', 'star', {inverse: true, shrink: 11, down: 10, right: 8}]}
+                    }
+                    layers = Neos.Fusion:DataStructure {
+                        tagName = 'div'
+                        style = 'fontSize:10rem;marginTop:25vh;'
+                        aria-label = 'Multiple Icons'
+                    }
+                }
+            }
+            stringAttributes {
+                title = 'String attributes  and solid fallback'
+                props {
+                    icon = 'house'
+                    class = '-icon'
+                    style = 'color:#00adee;height:50vh;marginTop:25vh;'
+                }
+            }
+            structureAttributes {
+                title = 'DataStructure and Duotone fallback'
+                props {
+                    icon = Neos.Fusion:DataStructure {
+                        icon = 'spinner'
+                        group = 'duotone'
+                    }
+                    settings = Neos.Fusion:DataStructure {
+                        animation = 'spinPulseReverse'
+                        primaryColor = '#00adee'
+                    }
+                    class = Neos.Fusion:DataStructure {
+                        base = '-icon'
+                        modifier = '-icon--modifier'
+                        null = null
+                        false = false
+                    }
+                    style = Neos.Fusion:DataStructure {
+                        height = '20vh'
+                        marginTop = '40vh'
+                        null = ${null}
+                        false = false
+                    }
+                }
+            }
+        }
+    }
+}

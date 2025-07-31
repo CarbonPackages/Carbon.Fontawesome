@@ -1,0 +1,17 @@
+prototype(Carbon.Fontawesome:Layers.Counter) < prototype(Neos.Fusion:Component) {
+    content = null
+    settings = null
+    tagName = 'span'
+
+    renderer = Carbon.Fontawesome:OptionalWrapperTag {
+        outerTagName = ${props.tagName}
+        innerTagName = ${props.tagName}
+        attributes = Carbon.Fontawesome:Attributes {
+            isIcon = false
+            baseClass = 'fa-icon-layers-counter'
+            attributes = ${props}
+            settings = ${props.settings}
+        }
+        content = ${props.content}
+    }
+}
