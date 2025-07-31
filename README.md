@@ -1,5 +1,7 @@
 # Carbon.Fontawesome
 
+[!Editor]
+
 Inline [Fontawesome 7] Icons into Neos with [AlpineJS]
 
 To make it work, you have to include [Main.js] (as Module) and [Main.css] in your installation by yourself. Or, you
@@ -165,6 +167,7 @@ The saved value will be `style:iconName`, e.g. `brands:neos`
             #   - arrows
 ```
 
+[!editor]: https://github.com/user-attachments/assets/42309040-41b5-4c97-adbe-175a05f5b86f
 [fontawesome 7]: https://fontawesome.com/icons
 [alpinejs]: http://alpinejs.dev
 [main.js]: Resources/Public/Modules/Main.js
