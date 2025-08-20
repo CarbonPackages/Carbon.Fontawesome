@@ -23,7 +23,7 @@ class ProcessorImplementation extends AbstractArrayFusionObject
             return '';
         }
         $renderIcon = $this->getRenderIcon();
-        return preg_replace_callback(
+        return (string) preg_replace_callback(
             '/\[icon(?<size>-[\d]*\.?[\d]*)?:(?<icon>[^]]*)\]/i',
             function ($match) use ($renderIcon) {
                 if (!$renderIcon) {

@@ -611,7 +611,7 @@ class IconService
         if (!empty($fixedStylesUnderscored)) {
             $items = array_filter(
                 $items,
-                fn($item) => array_intersect(
+                fn($item) => (bool) array_intersect(
                     $fixedStylesUnderscored,
                     $item['styles'],
                 ),
