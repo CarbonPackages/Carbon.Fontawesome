@@ -3,11 +3,18 @@
 }
 
 .fa-icon-intext {
-  height: 1em;
-  width: 1.25em;
+  --width: 1.25em;
+  --height: 1em;
+  height: var(--height);
+  width: var(--width);
   display: inline-flex;
   vertical-align: middle;
   transform: translateY(-0.1em);
   align-items: center;
   justify-content: center;
+
+  :where(.fa-icon) {
+    height: var(--height);
+    width: var(--width);
+  }
 }
