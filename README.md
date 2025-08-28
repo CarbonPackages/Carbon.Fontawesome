@@ -16,10 +16,10 @@ composer require carbon/fontawesome
 
 This package requires:
 
-* `neos/neos: ^8.3 || ^9.0`
-* `php: ^8.3`
-* `carbon/eel: ^2.21`
-* `carbon/fontawesomeicons: ^1.0`
+- `neos/neos: ^8.3 || ^9.0`
+- `php: ^8.3`
+- `carbon/eel: ^2.21`
+- `carbon/fontawesomeicons: ^1.0`
 
 > The `carbon/fontawesomeicons` package ships the Font Awesome 7 Free icon data used by this package.
 
@@ -27,18 +27,18 @@ This package requires:
 
 This package ships a minimal JS module and CSS you need to include in your site:
 
-* [`Resources/Public/Modules/Main.js`] (load as `type="module"`)
-* [`Resources/Public/Styles/Main.css`]
+- [`Resources/Public/Modules/Main.js`] (load as `type="module"`)
+- [`Resources/Public/Styles/Main.css`]
 
 You can either:
 
-* reference the built files directly from `/_Resources/Static/Packages/Carbon.Fontawesome/...`, or
-* copy them into your frontend build pipeline
+- reference the built files directly from `/_Resources/Static/Packages/Carbon.Fontawesome/...`, or
+- copy them into your frontend build pipeline
 
 Example (direct include in your layout):
 
 ```html
-<link rel="stylesheet" href="/_Resources/Static/Packages/Carbon.Fontawesome/Styles/Main.css">
+<link rel="stylesheet" href="/_Resources/Static/Packages/Carbon.Fontawesome/Styles/Main.css" />
 
 <!-- Alpine Plugin (see “Alpine.js load order”) -->
 <script type="module" defer src="/_Resources/Static/Packages/Carbon.Fontawesome/Modules/Main.js"></script>
@@ -64,7 +64,7 @@ import Alpine from "alpinejs";
 // Ensure the plugin is imported BEFORE Alpine.start()
 import "/Packages/Carbon/Resources/Private/Assets/Main.ts";
 
-window.Alpine = Alpine
+window.Alpine = Alpine;
 Alpine.start();
 ```
 
@@ -109,17 +109,17 @@ The string as the same as third argument of the icon, or an object with the sett
 The settings can have following properties, which will be applied to the icon (Remeber you can mix camelCase and kebab-case):
 Some of the settings need the corresponding CSS classes
 
-* `animation`: beat, bounce, fade, beat-fade, flip, shake, spin, spin-reverse, spin-pulse, spin-pulse-reverse
-* `size`: 2xs, xs, sm, lg, xl, 2xl, 1x, 2x, 3x, 4x, 5x, 6x, 7x, 8x, 9x, 10x
-* `fixedWidth`: boolean
-* `pull`: left, right
-* `border`: boolean
-* `inverse`: boolean
-* `color`: any valid CSS color value
-* `opacity`: Integer, value between 0 and 1
-* `fontSize`: float, will append `em`
-* `label`: string, will create `aria-label` attribute
-* `tooltip`: string, will create `aria-label` attribute with the `string`, and add the `x-tooltip` attribute, as well it ads the class `fa-icon-pointer-events`
+- `animation`: beat, bounce, fade, beat-fade, flip, shake, spin, spin-reverse, spin-pulse, spin-pulse-reverse
+- `size`: 2xs, xs, sm, lg, xl, 2xl, 1x, 2x, 3x, 4x, 5x, 6x, 7x, 8x, 9x, 10x
+- `fixedWidth`: boolean
+- `pull`: left, right
+- `border`: boolean
+- `inverse`: boolean
+- `color`: any valid CSS color value
+- `opacity`: Integer, value between 0 and 1
+- `fontSize`: float, will append `em`
+- `label`: string, will create `aria-label` attribute
+- `tooltip`: string, will create `aria-label` attribute with the `string`, and add the `x-tooltip` attribute, as well it ads the class `fa-icon-pointer-events`
 
 #### Other properties
 
@@ -151,48 +151,48 @@ For [Carbon.Fontawesome:Layers] and [Carbon.Fontawesome:List] look at the `@styl
 
 **Transform icon:**
 
-* `rotate`: integer|float
-* `flip`: horizontal, vertical, both
-* `scale`: integer|float minimal value -15. Units are 1/16em
-* `translateY`: integer|float Units are 1/16em. Move icon in Y axis
-* `translateX`: integer|float Units are 1/16em. Move icon in X axis
-* `shrink`: The same as `scale` with negative value. e.g. `shrink:3` is the same as `scale:-3`
-* `grow`: The same as `scale` with positive value. e.g. `grow:3` is the same as `scale:3`
-* `up`: The same as `translateY` with negative value. e.g. `up:3` is the same as `translateY:-3`
-* `down`: The same as `translateY` with positive value. e.g. `down:3` is the same as `translateY:3`
-* `left`: The same as `translateX` with negative value. e.g. `left:3` is the same as `translateX:-3`
-* `right`: The same as `translateX` with positive value. e.g. `right:3` is the same as `translateX:3`
+- `rotate`: integer|float
+- `flip`: horizontal, vertical, both
+- `scale`: integer|float minimal value -15. Units are 1/16em
+- `translateY`: integer|float Units are 1/16em. Move icon in Y axis
+- `translateX`: integer|float Units are 1/16em. Move icon in X axis
+- `shrink`: The same as `scale` with negative value. e.g. `shrink:3` is the same as `scale:-3`
+- `grow`: The same as `scale` with positive value. e.g. `grow:3` is the same as `scale:3`
+- `up`: The same as `translateY` with negative value. e.g. `up:3` is the same as `translateY:-3`
+- `down`: The same as `translateY` with positive value. e.g. `down:3` is the same as `translateY:3`
+- `left`: The same as `translateX` with negative value. e.g. `left:3` is the same as `translateX:-3`
+- `right`: The same as `translateX` with positive value. e.g. `right:3` is the same as `translateX:3`
 
 **If animation is enabled:**
 
-* `delay`: overrides delay in seconds, float
-* `duration`: overrides duration in seconds, float
-* `direction`: Set the direction: normal, reverse, alternate, alternate-reverse
-* `iteration`: integer, If set, set the max iterations, integer
-* `timing`: Set the animation timing
-* `scale`: (beat and beat-fade animation only), float
-* `startX`: (bounce animation only), float
-* `startY`: (bounce animation only), float
-* `jumpX`: (bounce animation only), float
-* `jumpY`: (bounce animation only), float
-* `height`: (bounce animation only), float
-* `landX`: (bounce animation only), float
-* `landY`: (bounce animation only), float
-* `rebound`: (bounce animation only), float
-* `fadeOpacity`: (fade and beat-fade animation only), float
-* `flipX`: (flip animation only), float
-* `flipY`: (flip animation only), float
-* `flipZ`: (flip animation only), float
-* `flipAngle`: (flip animation only), float
-* `steps`: (spin-pulse animation only), integer
+- `delay`: overrides delay in seconds, float
+- `duration`: overrides duration in seconds, float
+- `direction`: Set the direction: normal, reverse, alternate, alternate-reverse
+- `iteration`: integer, If set, set the max iterations, integer
+- `timing`: Set the animation timing
+- `scale`: (beat and beat-fade animation only), float
+- `startX`: (bounce animation only), float
+- `startY`: (bounce animation only), float
+- `jumpX`: (bounce animation only), float
+- `jumpY`: (bounce animation only), float
+- `height`: (bounce animation only), float
+- `landX`: (bounce animation only), float
+- `landY`: (bounce animation only), float
+- `rebound`: (bounce animation only), float
+- `fadeOpacity`: (fade and beat-fade animation only), float
+- `flipX`: (flip animation only), float
+- `flipY`: (flip animation only), float
+- `flipZ`: (flip animation only), float
+- `flipAngle`: (flip animation only), float
+- `steps`: (spin-pulse animation only), integer
 
 **For duotone icons only:**
 
-* `swapOpacity`: boolean
-* `primaryOpacity`: float between 0 and 1, e.g. 0.4
-* `secondaryOpacity`: float between 0 and 1, e.g. 0.4
-* `primaryColor`: any valid CSS color value, e.g. '#ff0000', 'red', 'rgb(255,0,0)', 'rgba(255,0,0,1), 'var(--my-color)'
-* `secondaryColor`: any valid CSS color value, e.g. '#00ff00', 'green', 'rgb(0,255,0)', 'rgba(0,255,0,1), 'var(--my-color)'
+- `swapOpacity`: boolean
+- `primaryOpacity`: float between 0 and 1, e.g. 0.4
+- `secondaryOpacity`: float between 0 and 1, e.g. 0.4
+- `primaryColor`: any valid CSS color value, e.g. '#ff0000', 'red', 'rgb(255,0,0)', 'rgba(255,0,0,1), 'var(--my-color)'
+- `secondaryColor`: any valid CSS color value, e.g. '#00ff00', 'green', 'rgb(0,255,0)', 'rgba(0,255,0,1), 'var(--my-color)'
 
 ## Example of using the editor
 
@@ -248,9 +248,9 @@ under the same package name).
 
 ## Troubleshooting
 
-* **No icons render:** Ensure `Main.css` and `Main.js` are loaded, and verify the **Alpine load order** noted above.
-* **Duotone colors don’t apply:** Use `primaryColor` / `secondaryColor` (or kebab-case variants) and verify the icon style is duotone.
-* **Processor not active:** Confirm the `@process.replaceIcons` Fusion step is added to Neos.Neos:Editable.
+- **No icons render:** Ensure `Main.css` and `Main.js` are loaded, and verify the **Alpine load order** noted above.
+- **Duotone colors don’t apply:** Use `primaryColor` / `secondaryColor` (or kebab-case variants) and verify the icon style is duotone.
+- **Processor not active:** Confirm the `@process.replaceIcons` Fusion step is added to Neos.Neos:Editable.
 
 [!editor]: https://github.com/user-attachments/assets/42309040-41b5-4c97-adbe-175a05f5b86f
 [fontawesome 7]: https://fontawesome.com/icons
