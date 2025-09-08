@@ -12,7 +12,7 @@ prototype(Carbon.Fontawesome:Processor) {
     /// string
     content = ${value}
 
-    /// boolean If set to false, the icon will not be rendered and the input will be erased
+    /// boolean If set to false, the icon will not be rendered and the output will be the title, tooltip, ariaLabel, alt or an empty string
     renderIcon = true
 
     iconRenderer = Carbon.Fontawesome:Icon {
