@@ -2,10 +2,15 @@
 
 namespace Carbon\Fontawesome\FusionObjects;
 
+use Carbon\Fontawesome\Service\ParseSettingsService;
+use Neos\Flow\Annotations as Flow;
 use Neos\Fusion\FusionObjects\AbstractArrayFusionObject;
 
 class ProcessorImplementation extends AbstractArrayFusionObject
 {
+    #[Flow\Inject]
+    protected ParseSettingsService $parseSettingsService;
+
     private function getContent(): string
     {
         return (string) $this->fusionValue('content');
@@ -27,7 +32,8 @@ class ProcessorImplementation extends AbstractArrayFusionObject
             '/\[icon(?<size>-[\d]*\.?[\d]*)?:(?<icon>[^]]*)\]/i',
             function ($match) use ($renderIcon) {
                 if (!$renderIcon) {
-                    return '';
+                    $settings = $this->parseSettingsService->parse($match['icon']);
+                    return $settings['title'] ?? $settings['tooltip'] ?? $settings['ariaLabel'] ?? $settings['alt'] ?? '';
                 }
                 $size = null;
                 if ($match['size']) {

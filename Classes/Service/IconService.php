@@ -7,12 +7,34 @@ use Neos\Utility\Files;
 use SQLite3;
 use function sprintf;
 
+/**
+ * @phpstan-type SidebarData array{icons: string[], packs: string[], styles: string[], categories: string[]}
+ * @phpstan-type PacksOrStyles string[]
+ * @phpstan-type FixedStyleUnderscored string
+ * @phpstan-type FixedStylesUnderscored array<string|int,FixedStyleUnderscored>
+ * @phpstan-type Styles array{constraints: array{packs: string[], styles: string[]}, styles: string[]}
+ * @phpstan-type Item array{name: string, value: mixed}
+ * @phpstan-type Icon array{label: string, name: string, categories: string}
+ * @phpstan-type IconValue array{label: string, name: string, value: string, categories: string[]}
+ */
 #[Flow\Scope('singleton')]
 class IconService
 {
-    protected $db;
+    protected ?SQLite3 $db = null;
+
+    /**
+     * @var mixed[]
+     */
     protected $styleSelector = [];
+
+    /**
+     * @var mixed[]
+     */
     protected $allStyles = [];
+
+    /**
+     * @var mixed[]
+     */
     protected $allPacks = [];
 
     /**
@@ -76,12 +98,12 @@ class IconService
     /**
      * Searches for icons based on the given search terms and type.
      *
-     * @param string|array|null $searchTerm The search terms to filter icons. If null, a random set of icons will be returned.
-     * @param array|null $packs
-     * @param array|null $stylesSelected
-     * @param array|null $categoriesSelected
-     * @param array|null $fixedStyles
-     * @return array An array containing the items and total count.
+     * @param string|mixed[]|null $searchTerm The search terms to filter icons. If null, a random set of icons will be returned.
+     * @param mixed[]|null $packsSelected
+     * @param mixed[]|null $stylesSelected
+     * @param mixed[]|null $categoriesSelected
+     * @param mixed[]|null $fixedStyles
+     * @return SidebarData An array containing the items and total count.
      */
     public function search(
         string|array|null $searchTerm = null,
@@ -195,11 +217,11 @@ class IconService
     /**
      * Adds sidebar data for packs, styles, and categories.
      *
-     * @param array $constraints Which packs and styles are available.
-     * @param array|null $icons The icons to include in the sidebar.
-     * @param array|null $filterCategories The categories to filter by.
-     * @param array|null $filterStyles The styles to filter by.
-     * @return array An associative array containing the sidebar data.
+     * @param mixed[] $constraints Which packs and styles are available.
+     * @param mixed[]|null $icons The icons to include in the sidebar.
+     * @param mixed[]|null $filterCategories The categories to filter by.
+     * @param mixed[]|null $filterStyles The styles to filter by.
+     * @return SidebarData An associative array containing the sidebar data.
      */
     private function addSidebarData(
         array $constraints,
@@ -262,8 +284,8 @@ class IconService
     /**
      * Returns a set of default icons if no selection is made.
      *
-     * @param array $styles The styles to filter the icons by.
-     * @return array An array of default icons grouped by style.
+     * @param string[] $styles The styles to filter the icons by.
+     * @return array<string,array{label:string,name:string,icons:IconValue[],preview:array{pack:mixed,style:mixed}}> An array of default icons grouped by style.
      */
     private function noSelection(array $styles): array
     {
@@ -362,8 +384,8 @@ class IconService
      * Adds the style prefix to each icon and returns an array of icons with their labels, names, values, and categories.
      *
      * @param string $style The style prefix to add to each icon.
-     * @param array|null $icons The icons to process.
-     * @return array An array of icons with their labels, names, values, and categories.
+     * @param mixed[]|null $icons The icons to process.
+     * @return IconValue[] An array of icons with their labels, names, values, and categories.
      */
     private function addValueToIcons(string $style, ?array $icons = null): array
     {
@@ -386,8 +408,8 @@ class IconService
     /**
      * Trims leading and trailing underscores from each string in the array.
      *
-     * @param array $strings An array of strings to be trimmed.
-     * @return array The array with each string trimmed of leading and trailing underscores.
+     * @param string[] $strings An array of strings to be trimmed.
+     * @return string[] The array with each string trimmed of leading and trailing underscores.
      */
     private function trimUnderscores(array $strings): array
     {
@@ -405,6 +427,9 @@ class IconService
      */
     private function query(string $query, bool $single = false): mixed
     {
+        if (!$this->db) {
+            return null;
+        }
         if ($single) {
             $resultSet = $this->db->querySingle($query);
             return $resultSet !== false ? $resultSet : null;
@@ -429,7 +454,7 @@ class IconService
     /**
      * Normalizes the search term by removing unwanted characters and formatting it.
      *
-     * @param array|string|null $input The input to normalize.
+     * @param string[]|string|null $input The input to normalize.
      * @return string The normalized search term.
      */
     private function normalizeSearchTerm(
@@ -493,14 +518,14 @@ class IconService
      * according to the order in $order (array of names/strings).
      * Elements whose ‘name’ does not appear in $order are placed at the end.
      *
-     * @param array $items A numerically indexed array with sub-arrays:
+     * @param Item[] $items A numerically indexed array with sub-arrays:
      *                     [
      *                       ['name' => 'foo', 'value' => 123],
      *                       ['name' => 'bar', 'value' => 456],
      *                       ...
      *                     ]
-     * @param array $order An array of strings (e.g. ['bar', 'baz', 'foo']), that specifies the desired sort order of the 'name' fields.
-     * @return array       The newly sorted array.
+     * @param string[] $order An array of strings (e.g. ['bar', 'baz', 'foo']), that specifies the desired sort order of the 'name' fields.
+     * @return Item[] The newly sorted array.
      */
     private function sortItemsByNameOrder(
         array $items,
@@ -535,10 +560,10 @@ class IconService
     /**
      * Returns the styles based on the selected packs and styles, or fixed styles.
      *
-     * @param array|null $packsSelected The packs to filter by.
-     * @param array|null $stylesSelected The styles to filter by.
-     * @param array|null $fixedStyles The fixed styles to include.
-     * @return array An array containing the constraints and the styles.
+     * @param string[]|null $packsSelected The packs to filter by.
+     * @param string[]|null $stylesSelected The styles to filter by.
+     * @param string[]|null $fixedStyles The fixed styles to include.
+     * @return Styles An array containing the constraints and the styles.
      */
     private function getStyles(
         ?array $packsSelected = null,
@@ -596,8 +621,8 @@ class IconService
      * Filters packs or styles based on the given type and fixed styles.
      *
      * @param string $type The type to filter by ('packs' or 'styles').
-     * @param array|null $fixedStylesUnderscored An array of fixed styles with underscores.
-     * @return array An array of filtered pack or style names.
+     * @param FixedStylesUnderscored|null $fixedStylesUnderscored An array of fixed styles with underscores.
+     * @return PacksOrStyles An array of filtered pack or style names.
      */
     private function filterPacksOrStyles(
         string $type,

@@ -6,6 +6,9 @@ use Neos\Flow\Annotations as Flow;
 use Carbon\Fontawesome\Service\IconService;
 use Neos\Neos\Service\DataSource\AbstractDataSource;
 
+/**
+ * @phpstan-import-type SidebarData from IconService
+ */
 class FontAwesomeDataSource extends AbstractDataSource
 {
     /**
@@ -16,6 +19,13 @@ class FontAwesomeDataSource extends AbstractDataSource
     #[Flow\Inject]
     protected IconService $iconService;
 
+    /**
+     * Undocumented function
+     *
+     * @param mixed $node
+     * @param array<string,mixed> $arguments
+     * @return string|int|SidebarData|null
+     */
     public function getData(mixed $node = null, array $arguments = [])
     {
         if (!empty($arguments['label'])) {

@@ -4,24 +4,53 @@ namespace Carbon\Fontawesome\FusionObjects;
 
 use Carbon\Eel\Service\StringConversionService;
 use Carbon\Eel\Service\MergeClassesService;
+use Carbon\Fontawesome\Service\ParseSettingsService;
 use Carbon\Eel\Service\StylesService;
 use Neos\Flow\Annotations as Flow;
 use Neos\Fusion\FusionObjects\AbstractArrayFusionObject;
 
+/**
+ * @phpstan-type IconSettings array<string,mixed>
+ * @phpstan-type IconEntry array{group:string,icon:string,settings:IconSettings}
+ * @phpstan-type Wrapper array{class:string,style:string}
+ * @phpstan-type Attributes array{item:IconSettings,wrapper:Wrapper|null}
+ * @phpstan-type MultiAttributes array{multipleIcons:true,items:list<Attributes>}
+ */
 class AttributeImplementation extends AbstractArrayFusionObject
 {
-    #[Flow\InjectConfiguration('iconConfig')]
-    protected $config;
 
-    protected $isIcon = false;
-    protected $icons = [];
-    protected $tagSettings = [];
-    protected $attributesFromFusion = [];
+    #[Flow\Inject]
+    protected ParseSettingsService $parseSettingsService;
 
     /**
-     * Return attributes for the icon.
+     * Global configuration (iconConfig)
+     * @var array<string,mixed>
+     */
+    #[Flow\InjectConfiguration('iconConfig')]
+    protected array $config;
+
+    /** @var bool */
+    protected bool $isIcon = false;
+
+    /**
+     * @var list<IconEntry>
+     */
+    protected array $icons = [];
+
+    /**
+     * @var IconSettings
+     */
+    protected array $tagSettings = [];
+
+    /**
+     * @var array<string,mixed> Composed raw attributes from Fusion (class as string[] / style as array)
+     */
+    protected array $attributesFromFusion = [];
+
+    /**
+     * Determine final attributes.
      *
-     * @return string|null
+     * @return Attributes|MultiAttributes|null Null when no icon; Attributes for single icon or tag; MultiAttributes for multiple icons.
      */
     public function evaluate()
     {
@@ -37,6 +66,7 @@ class AttributeImplementation extends AbstractArrayFusionObject
         }
 
         if (count($this->icons) == 1) {
+            // @phpstan-ignore arrayValues.list
             $icon = array_values($this->icons)[0];
             return $this->getAttributes($icon['settings'], $icon);
         }
@@ -55,6 +85,9 @@ class AttributeImplementation extends AbstractArrayFusionObject
         return $attributes;
     }
 
+    /**
+     * @return array<string,string>
+     */
     private function getReplacements(): array
     {
         $replacements = $this->fusionValue('replacements');
@@ -62,9 +95,9 @@ class AttributeImplementation extends AbstractArrayFusionObject
     }
 
     /**
-     * Get the attributes from Fusion and prepare them for the icon.
+     * Build the base attributes (class/style) from Fusion.
      *
-     * @return array
+     * @return array{class:list<string|null>,style:array<string,mixed>}
      */
     private function getAttributesFromFusion(): array
     {
@@ -94,14 +127,14 @@ class AttributeImplementation extends AbstractArrayFusionObject
     /**
      * Get the attributes for the icon based on the settings and icon.
      *
-     * @param array $settings The settings for the icon.
-     * @param array|null $iconParts The icon data, if available.
-     * @return array|null The attributes for the icon, or null if not applicable.
+     * @param IconSettings $settings
+     * @param array{group:string,icon:string,settings:IconSettings}|null $iconParts
+     * @return Attributes
      */
     private function getAttributes(
         array $settings,
         ?array $iconParts = null,
-    ): ?array {
+    ): array {
         $classNames = [];
         $styles = [];
         $hasIcon = isset($iconParts['group']) && isset($iconParts['icon']);
@@ -215,9 +248,14 @@ class AttributeImplementation extends AbstractArrayFusionObject
     /**
      * Get the attributes from the settings based on the global configuration.
      *
-     * @param array $settings The settings to use for the attributes.
-     * @param array $attributes The initial attributes to merge with.
-     * @return array The merged attributes.
+     * @param array<string,mixed> $settings The settings to use for the attributes.
+     * @param array<string,mixed> $attributes The initial attributes to merge with.
+     * @return array<string,mixed> The merged attributes.
+     */
+    /**
+     * @param IconSettings $settings
+     * @param IconSettings $attributes
+     * @return IconSettings
      */
     private function getAttributesFromSettings(
         array $settings,
@@ -254,7 +292,7 @@ class AttributeImplementation extends AbstractArrayFusionObject
         // Cleanup attributes: remove null values
         $attributes = array_filter(
             $attributes,
-            fn ($value) => $value !== null && $value !== '',
+            fn($value) => $value !== null && $value !== '',
         );
 
         return $attributes;
@@ -264,9 +302,15 @@ class AttributeImplementation extends AbstractArrayFusionObject
      * Get the class names based on the configuration and settings.
      *
      * @param string $key The configuration key to look up.
-     * @param array $classNames The initial class names to merge with.
-     * @param array $settings The settings to use for the class names.
-     * @return array The merged class names.
+     * @param string[] $classNames The initial class names to merge with.
+     * @param mixed[] $settings The settings to use for the class names.
+     * @return string[] The merged class names.
+     */
+    /**
+     * @param string $key
+     * @param list<string> $classNames
+     * @param IconSettings $settings
+     * @return list<string>
      */
     private function getClassNames(
         string $key,
@@ -312,10 +356,16 @@ class AttributeImplementation extends AbstractArrayFusionObject
      * Get the styles based on the configuration and settings.
      *
      * @param string $key The configuration key to look up.
-     * @param array $styles The initial styles to merge with.
-     * @param array $settings The settings to use for the styles.
+     * @param mixed[] $styles The initial styles to merge with.
+     * @param mixed[] $settings The settings to use for the styles.
      * @param string|null $property Optional property to set the style value.
-     * @return array The merged styles.
+     * @return mixed[] The merged styles.
+     */
+    /**
+     * @param string $key
+     * @param array<string,mixed> $styles
+     * @param IconSettings $settings
+     * @return array<string,mixed>
      */
     private function getStyles(
         string $key,
@@ -380,10 +430,16 @@ class AttributeImplementation extends AbstractArrayFusionObject
     /**
      * Get a value from the settings based on its type.
      *
-     * @param string $type The type of the value ('numeric', 'float, 'integer', 'boolean', 'string').
      * @param string $key The key to look up in the settings.
-     * @param array $config Additional configuration for the value.
+     * @param array<string,mixed> $config Additional configuration for the value.
+     * @param array<string,mixed> $settings The settings to use for the value.
      * @return mixed The value from the settings, or null if not found or invalid.
+     */
+    /**
+     * @param string $key
+     * @param array<string,mixed> $config
+     * @param IconSettings $settings
+     * @return mixed
      */
     private function getSettingsValue(
         string $key,
@@ -429,6 +485,7 @@ class AttributeImplementation extends AbstractArrayFusionObject
      * Get a string value from the settings
      *
      * @param string $key
+     * @param IconSettings $settings
      * @return string|null
      */
     private function getStringSettingsValue(
@@ -465,10 +522,10 @@ class AttributeImplementation extends AbstractArrayFusionObject
      */
     private function getFusionValues(): void
     {
-        $this->attributesFromFusion = $this->getAttributesFromFusion() ?? [];
+        $this->attributesFromFusion = $this->getAttributesFromFusion();
 
         $this->isIcon = $this->fusionValue('isIcon') ?? false;
-        $settings = $this->parseSettings($this->fusionValue('settings')) ?? [];
+        $settings = $this->parseSettingsService->parse($this->fusionValue('settings')) ?? [];
 
         if (!$this->isIcon) {
             $this->tagSettings = $settings;
@@ -509,7 +566,7 @@ class AttributeImplementation extends AbstractArrayFusionObject
             // If the single icon is a string, we split it by ':'
             if (is_string($iconParts)) {
                 $iconParts = explode(':', $iconParts, 3);
-                $iconParts = $this->trim($iconParts);
+                $iconParts = $this->parseSettingsService->trim($iconParts);
 
                 // handle shorthand replacements
                 if (isset($replacements[$iconParts[0]])) {
@@ -528,7 +585,7 @@ class AttributeImplementation extends AbstractArrayFusionObject
                 }
             }
             // Trim the icon values
-            $iconParts = $this->trim($iconParts);
+            $iconParts = $this->parseSettingsService->trim($iconParts);
             $count = count($iconParts);
             // Nothing to do if the value is empty
             if ($count === 0) {
@@ -561,7 +618,7 @@ class AttributeImplementation extends AbstractArrayFusionObject
                     'group' => $group,
                     'icon' => $icon,
                     'settings' =>
-                        $this->parseSettings(
+                        $this->parseSettingsService->parse(
                             $iconParts['settings'] ?? ($iconParts[2] ?? null),
                         ) ?? $settings,
                 ];
@@ -569,167 +626,5 @@ class AttributeImplementation extends AbstractArrayFusionObject
         }
 
         $this->icons = $icons;
-    }
-
-    /**
-     * Converts a string in the format "{key1:value1,key2:value2,…}"
-     * into an associative array. Numeric values are converted to int or float.
-     *
-     * @param string|array|null $input Input string or array, e.g. "{animation:spin,rotate:90}"
-     * @return array            Associative array, e.g. ['animation'=>'spin','rotate'=>90]
-     */
-    private function parseSettings(mixed $input = null): ?array
-    {
-        if (is_array($input)) {
-            if (empty($input)) {
-                return null;
-            }
-            // If input is already an array, just convert keys and values
-            return $this->keysToCamelCaseAndValuesToKebabCase($input);
-        }
-
-        if ($input === null || $input === '') {
-            return null;
-        }
-
-        // 1. Remove the opening and closing braces
-        $inner = $this->trim($input);
-        if (substr($inner, 0, 1) === '{') {
-            $inner = substr($inner, 1);
-        }
-        if (substr($inner, -1) === '}') {
-            $inner = substr($inner, 0, -1);
-        }
-
-        // 2. If the string is empty after removing braces, return null
-        if ($inner === '') {
-            return null;
-        }
-
-        $result = [];
-        // 3. Split by commas to get "key:value" pairs
-        $pairs = explode(',', $inner);
-        foreach ($pairs as $pair) {
-            // 4. Split each pair by the first colon into key and value
-            $parts = $this->trim(explode(':', $pair, 2));
-            $key = $parts[0] ?: null;
-            $value = $parts[1] ?? null;
-            if (!$key) {
-                // If there's no key, skip this pair
-                continue;
-            }
-            if ($value === null) {
-                // If there's no colon, treat the whole part as a key as true
-                $result[$key] = true;
-                continue;
-            }
-
-            // 5. Normalize lowercase for boolean/null check
-            $lower = strtolower($value);
-            if ($lower === 'true') {
-                $result[$key] = true;
-                continue;
-            }
-            if ($lower === 'false') {
-                $result[$key] = false;
-                continue;
-            }
-            if ($lower === 'null') {
-                $result[$key] = null;
-                continue;
-            }
-
-            // 6. If not boolean, check for numeric and convert accordingly
-            $numeric = $this->normalizeNumericValue($value);
-            if ($numeric !== null) {
-                $result[$key] = $numeric;
-                continue;
-            }
-
-            // 7. Otherwise trim the string
-            $result[$key] = $this->trim($value);
-        }
-
-        return $this->keysToCamelCaseAndValuesToKebabCase($result);
-    }
-
-    /**
-     * Converts an associative array to a new array where:
-     * - Keys are converted to camelCase
-     * - Values are converted to kebab-case if they are strings
-     *
-     * @param array $array The input associative array.
-     * @return array The transformed array with camelCase keys and kebab-case values.
-     */
-    private function keysToCamelCaseAndValuesToKebabCase(array $array): array
-    {
-        $result = [];
-        foreach ($array as $key => $value) {
-            // Convert key to camelCase
-            $camelCaseKey = StringConversionService::toCamelCase($key);
-            if (
-                $camelCaseKey === 'label' ||
-                $camelCaseKey === 'tooltip' ||
-                $camelCaseKey === 'alt' ||
-                $camelCaseKey === 'title'
-            ) {
-                $result[$camelCaseKey] = $this->trim($value);
-            } elseif (is_string($value)) {
-                // Convert value to kebab-case if it's a string
-                $result[
-                    $camelCaseKey
-                ] = StringConversionService::convertCamelCase($value);
-            } else {
-                $result[$camelCaseKey] = $value;
-            }
-        }
-        return $result;
-    }
-
-    /**
-     * Trims a value or each element in an array.
-     * If the value is a string, it trims whitespace.
-     * If it's an array, it trims each element.
-     * Otherwise, it returns the value unchanged.
-     *
-     * @param mixed $value The value to trim.
-     * @return mixed The trimmed value or array.
-     */
-    private function trim(mixed $value): mixed
-    {
-        if (is_string($value)) {
-            return trim($value, " \n\r\t\v\0'\"");
-        }
-        if (is_array($value)) {
-            return array_map(fn ($item) => $this->trim($item), $value);
-        }
-        return $value;
-    }
-
-    /**
-     * Normalizes a value to an int or float if it's numeric.
-     * Returns null if the value is not numeric.
-     *
-     * @param mixed $value The value to normalize.
-     * @return int|float|null The normalized numeric value, or null if not numeric.
-     */
-    public function normalizeNumericValue(mixed $value): int|float|null
-    {
-        if (is_float($value) || is_int($value)) {
-            // Already a numeric type
-            return $value;
-        }
-
-        if (!is_numeric($value)) {
-            return null;
-        }
-
-        if (ctype_digit($value)) {
-            // Pure integer
-            return (int) $value;
-        }
-
-        // Float (contains decimal point or exponent)
-        return (float) $value;
     }
 }
