@@ -12,7 +12,7 @@ use Neos\Fusion\FusionObjects\AbstractArrayFusionObject;
 /**
  * @phpstan-type IconSettings array<string,mixed>
  * @phpstan-type IconEntry array{group:string,icon:string,settings:IconSettings}
- * @phpstan-type Wrapper array{class:string,style:string}
+ * @phpstan-type Wrapper array{class:?string,style:?string}
  * @phpstan-type Attributes array{item:IconSettings,wrapper:Wrapper|null}
  * @phpstan-type MultiAttributes array{multipleIcons:true,items:list<Attributes>}
  */
@@ -128,7 +128,7 @@ class AttributeImplementation extends AbstractArrayFusionObject
      * Get the attributes for the icon based on the settings and icon.
      *
      * @param IconSettings $settings
-     * @param array{group:string,icon:string,settings:IconSettings}|null $iconParts
+     * @param array{group?:string,icon?:string,settings:IconSettings}|null $iconParts
      * @return Attributes
      */
     private function getAttributes(
@@ -292,7 +292,7 @@ class AttributeImplementation extends AbstractArrayFusionObject
         // Cleanup attributes: remove null values
         $attributes = array_filter(
             $attributes,
-            fn($value) => $value !== null && $value !== '',
+            fn ($value) => $value !== null && $value !== '',
         );
 
         return $attributes;
