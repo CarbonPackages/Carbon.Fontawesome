@@ -4,7 +4,7 @@
     "type": "neos-carbon",
     "license": "GPL-3.0-or-later",
     "require": {
-        "php": "^8.3",
+        "php": "^8.2",
         "neos/neos": "^8.3 || ^9.0",
         "carbon/eel": "^2.21",
         "carbon/fontawesomeicons": "^1.0"
