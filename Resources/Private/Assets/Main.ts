@@ -45,7 +45,7 @@ function replaceTag(element, markup) {
 }
 
 window.addEventListener("alpine:init", () => {
-    window.Alpine.data("icon", (group, icon) => ({
+    window.Alpine.data("icon", (group, icon, path) => ({
         init() {
             const segment = `${group}/${icon}`;
             const cache = getCache(segment);
@@ -53,7 +53,7 @@ window.addEventListener("alpine:init", () => {
                 replaceTag(this.$el, cache);
                 return;
             }
-            fetch(`/_Resources/Static/Packages/Carbon.Fontawesome.Icons/${segment}.svg`)
+            fetch(`${path || "/_Resources/Static/Packages/Carbon.Fontawesome.Icons"}/${segment}.svg`)
                 .then((response) => {
                     if (!response.ok) {
                         throw new Error("Failed to load icon");

@@ -118,6 +118,7 @@ class AttributeImplementation extends AbstractArrayFusionObject
             $attributes['layers'],
             $attributes['replacements'],
             $attributes['wrapper'],
+            $attributes['iconPath'],
         );
         $attributes['style'] = $styles;
         $attributes['class'] = [$baseClass, $class];
@@ -214,13 +215,31 @@ class AttributeImplementation extends AbstractArrayFusionObject
         }
 
         // Build up attributes
-        $xData = $hasIcon
-            ? sprintf(
-                'icon(\'%s\',\'%s\')',
-                $iconParts['group'],
-                $iconParts['icon'],
-            )
-            : null;
+        $xData = null;
+        if ($hasIcon) {
+            if (empty($iconParts['path'])) {
+                $xData = sprintf(
+                    'icon(\'%s\',\'%s\')',
+                    $iconParts['group'],
+                    $iconParts['icon'],
+                );
+            } else {
+                if (str_starts_with($iconParts['path'], 'resource://')) {
+                    $iconParts['path'] = substr($iconParts['path'], 11);
+                    if (str_ends_with($iconParts['path'], '/Public')) {
+                        $iconParts['path'] = substr($iconParts['path'], 0, -7);
+                    }
+                    $iconParts['path'] = sprintf('/_Resources/Static/Packages/%s', $iconParts['path']);
+                }
+
+                $xData = sprintf(
+                    'icon(\'%s\',\'%s\',\'%s\')',
+                    $iconParts['group'],
+                    $iconParts['icon'],
+                    $iconParts['path']
+                );
+            }
+        }
 
         $attributes = [
             'x-data' => $xData,
@@ -505,12 +524,17 @@ class AttributeImplementation extends AbstractArrayFusionObject
      *
      * @param string $group The icon group (e.g., 'solid', 'regular', 'brands').
      * @param string $icon The icon name (e.g., 'check', 'times').
+     * @param ?string $iconPath The path to the icons, if null the default path will be used.
      * @return bool True if the icon exists, false otherwise.
      */
-    private function checkIfIconExists(string $group, string $icon): bool
+    private function checkIfIconExists(string $group, string $icon, ?string $iconPath = null): bool
     {
+        if (empty($iconPath)) {
+            $iconPath = 'resource://Carbon.Fontawesome.Icons/Public';
+        }
         $path = sprintf(
-            'resource://Carbon.Fontawesome.Icons/Public/%s/%s.svg',
+            '%s/%s/%s.svg',
+            $iconPath,
             $group,
             $icon,
         );
@@ -613,10 +637,13 @@ class AttributeImplementation extends AbstractArrayFusionObject
                 $group = 'duotone-solid';
             }
 
-            if ($this->checkIfIconExists($group, $icon)) {
+            $iconPath = $this->fusionValue('iconPath');
+            $iconPath = is_string($iconPath) ? trim(rtrim($iconPath, '/')) : null;
+            if ($this->checkIfIconExists($group, $icon, $iconPath)) {
                 $icons[] = [
                     'group' => $group,
                     'icon' => $icon,
+                    'path' => $iconPath ?: null,
                     'settings' =>
                         $this->parseSettingsService->parse(
                             $iconParts['settings'] ?? ($iconParts[2] ?? null),

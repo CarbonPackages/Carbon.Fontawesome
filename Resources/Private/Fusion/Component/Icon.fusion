@@ -69,6 +69,9 @@ prototype(Carbon.Fontawesome:Icon) < prototype(Neos.Fusion:Component) {
         attributes = Neos.Fusion:DataStructure
     }
 
+    // Path to the icons, default is 'resource://Carbon.Fontawesome.Icons/Public'
+    iconPath = null
+
     @private.attributes = Carbon.Fontawesome:Attributes {
         isIcon = true
         baseClass = 'fa-icon'
@@ -76,6 +79,7 @@ prototype(Carbon.Fontawesome:Icon) < prototype(Neos.Fusion:Component) {
         icon = ${props.icon}
         settings = ${props.settings}
         replacements = ${props.replacements}
+        iconPath = ${props.iconPath}
     }
 
     renderer = Carbon.Eel:Tag {
