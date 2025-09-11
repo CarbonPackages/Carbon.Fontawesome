@@ -9,7 +9,8 @@ use Carbon\Eel\Service\StringConversionService;
  * @phpstan-type IconSettings array<string,mixed>
  */
 #[Flow\Scope('singleton')]
-class ParseSettingsService {
+class ParseSettingsService
+{
     /**
      * Converts a string in the format "{key1:value1,key2:value2,…}"
      * into an associative array. Numeric values are converted to int or float.

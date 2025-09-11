@@ -32,8 +32,13 @@ class ProcessorImplementation extends AbstractArrayFusionObject
             '/\[icon(?<size>-[\d]*\.?[\d]*)?:(?<icon>[^]]*)\]/i',
             function ($match) use ($renderIcon) {
                 if (!$renderIcon) {
-                    $settings = $this->parseSettingsService->parse($match['icon']);
-                    return $settings['title'] ?? $settings['tooltip'] ?? $settings['ariaLabel'] ?? $settings['alt'] ?? '';
+                    $settings = $this->parseSettingsService->parse(
+                        $match['icon'],
+                    );
+                    return $settings['title'] ??
+                        ($settings['tooltip'] ??
+                            ($settings['ariaLabel'] ??
+                                ($settings['alt'] ?? '')));
                 }
                 $size = null;
                 if ($match['size']) {

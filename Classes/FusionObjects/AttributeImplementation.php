@@ -18,7 +18,6 @@ use Neos\Fusion\FusionObjects\AbstractArrayFusionObject;
  */
 class AttributeImplementation extends AbstractArrayFusionObject
 {
-
     #[Flow\Inject]
     protected ParseSettingsService $parseSettingsService;
 
@@ -229,14 +228,17 @@ class AttributeImplementation extends AbstractArrayFusionObject
                     if (str_ends_with($iconParts['path'], '/Public')) {
                         $iconParts['path'] = substr($iconParts['path'], 0, -7);
                     }
-                    $iconParts['path'] = sprintf('/_Resources/Static/Packages/%s', $iconParts['path']);
+                    $iconParts['path'] = sprintf(
+                        '/_Resources/Static/Packages/%s',
+                        $iconParts['path'],
+                    );
                 }
 
                 $xData = sprintf(
                     'icon(\'%s\',\'%s\',\'%s\')',
                     $iconParts['group'],
                     $iconParts['icon'],
-                    $iconParts['path']
+                    $iconParts['path'],
                 );
             }
         }
@@ -311,7 +313,7 @@ class AttributeImplementation extends AbstractArrayFusionObject
         // Cleanup attributes: remove null values
         $attributes = array_filter(
             $attributes,
-            fn ($value) => $value !== null && $value !== '',
+            fn($value) => $value !== null && $value !== '',
         );
 
         return $attributes;
@@ -527,17 +529,15 @@ class AttributeImplementation extends AbstractArrayFusionObject
      * @param ?string $iconPath The path to the icons, if null the default path will be used.
      * @return bool True if the icon exists, false otherwise.
      */
-    private function checkIfIconExists(string $group, string $icon, ?string $iconPath = null): bool
-    {
+    private function checkIfIconExists(
+        string $group,
+        string $icon,
+        ?string $iconPath = null,
+    ): bool {
         if (empty($iconPath)) {
             $iconPath = 'resource://Carbon.Fontawesome.Icons/Public';
         }
-        $path = sprintf(
-            '%s/%s/%s.svg',
-            $iconPath,
-            $group,
-            $icon,
-        );
+        $path = sprintf('%s/%s/%s.svg', $iconPath, $group, $icon);
         return file_exists($path);
     }
 
@@ -549,7 +549,10 @@ class AttributeImplementation extends AbstractArrayFusionObject
         $this->attributesFromFusion = $this->getAttributesFromFusion();
 
         $this->isIcon = $this->fusionValue('isIcon') ?? false;
-        $settings = $this->parseSettingsService->parse($this->fusionValue('settings')) ?? [];
+        $settings =
+            $this->parseSettingsService->parse(
+                $this->fusionValue('settings'),
+            ) ?? [];
 
         if (!$this->isIcon) {
             $this->tagSettings = $settings;
@@ -638,7 +641,9 @@ class AttributeImplementation extends AbstractArrayFusionObject
             }
 
             $iconPath = $this->fusionValue('iconPath');
-            $iconPath = is_string($iconPath) ? trim(rtrim($iconPath, '/')) : null;
+            $iconPath = is_string($iconPath)
+                ? trim(rtrim($iconPath, '/'))
+                : null;
             if ($this->checkIfIconExists($group, $icon, $iconPath)) {
                 $icons[] = [
                     'group' => $group,
