@@ -22,6 +22,11 @@ class IconService
 {
     protected ?SQLite3 $db = null;
 
+    const DATABASE_LOCATION = 'CarbonFontawesomeStorage/database.sqlite';
+
+    #[Flow\InjectConfiguration('databaseLocation')]
+    protected string $databaseLocation;
+
     /**
      * @var mixed[]
      */
@@ -47,13 +52,15 @@ class IconService
         if ($this->db) {
             return;
         }
-        $this->db = new SQLite3(
-            Files::concatenatePaths([
-                FLOW_PATH_ROOT,
-                'Packages/Carbon/Carbon.Fontawesome.Icons/Resources/Private/database.sqlite',
-            ]),
-            SQLITE3_OPEN_READONLY,
-        );
+        $path = Files::concatenatePaths([FLOW_PATH_DATA, self::DATABASE_LOCATION]);
+        if (!is_dir(dirname($path))) {
+            Files::createDirectoryRecursively(dirname($path));
+        }
+        if (!file_exists($path)) {
+            copy($this->databaseLocation, $path);
+        }
+
+        $this->db = new SQLite3($path, SQLITE3_OPEN_READONLY);
 
         $styleSelector = [];
         foreach ($this->query('SELECT * FROM "styleSelector"') as $value) {

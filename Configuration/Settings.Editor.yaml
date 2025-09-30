@@ -3,6 +3,7 @@
 
 Carbon:
   Fontawesome:
+    databaseLocation: 'resource://Carbon.Fontawesome.Icons/Private/database.sqlite'
     iconConfigMixins:
       color: &color
         type: 'string'
