@@ -1,7 +1,7 @@
-@property --maxHeight { syntax: "*"; inherits: false;}
-@property --transform { syntax: "*"; inherits: false;}
 @property --minHeight { syntax: "*"; inherits: false;}
 @property --opacity { syntax: "*"; inherits: false;}
+@property --transform { syntax: "*"; inherits: false;}
+@property --maxHeight { syntax: "*"; inherits: false;}
 @property --paddingRight { syntax: "*"; inherits: false;}
 @property --textAlign { syntax: "*"; inherits: false;}
 .fontawesome-1d1d8sr{--dialog-max-height:calc(100vh - var(--spacing-GoldenUnit) * 2)}
