@@ -7,7 +7,7 @@
         "php": "^8.2",
         "neos/neos": "^8.3 || ^9.0",
         "carbon/eel": "^2.21",
-        "carbon/fontawesomeicons": "^1.0"
+        "carbon/fontawesomeicons": "^1.1.1"
     },
     "suggest": {
         "packagefactory/atomicfusion-proptypes": "Validate the props passed to a component via @propType annotation"
