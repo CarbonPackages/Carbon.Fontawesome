@@ -16,10 +16,10 @@ composer require carbon/fontawesome
 
 This package requires:
 
+- `php: ^8.2`
 - `neos/neos: ^8.3 || ^9.0`
-- `php: ^8.3`
 - `carbon/eel: ^2.21`
-- `carbon/fontawesomeicons: ^1.0`
+- `carbon/fontawesomeicons: ^1.1.1`
 
 > The `carbon/fontawesomeicons` package ships the Font Awesome 7 Free icon data used by this package.
 
