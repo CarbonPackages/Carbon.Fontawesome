@@ -28,6 +28,9 @@ class AttributeImplementation extends AbstractArrayFusionObject
     #[Flow\InjectConfiguration('iconConfig')]
     protected array $config;
 
+    #[Flow\InjectConfiguration('version', 'Carbon.Fontawesome')]
+    protected string $version;
+
     /** @var bool */
     protected bool $isIcon = false;
 
@@ -218,9 +221,10 @@ class AttributeImplementation extends AbstractArrayFusionObject
         if ($hasIcon) {
             if (empty($iconParts['path'])) {
                 $xData = sprintf(
-                    'icon(\'%s\',\'%s\')',
+                    'icon(\'%s\',\'%s\',\'%s\')',
                     $iconParts['group'],
                     $iconParts['icon'],
+                    $this->version,
                 );
             } else {
                 if (str_starts_with($iconParts['path'], 'resource://')) {
@@ -235,9 +239,10 @@ class AttributeImplementation extends AbstractArrayFusionObject
                 }
 
                 $xData = sprintf(
-                    'icon(\'%s\',\'%s\',\'%s\')',
+                    'icon(\'%s\',\'%s\',\'%s\',\'%s\')',
                     $iconParts['group'],
                     $iconParts['icon'],
+                    $this->version,
                     $iconParts['path'],
                 );
             }
