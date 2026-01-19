@@ -30,6 +30,10 @@ export default async function setIcon({
 
 // Get data from the cache.
 async function getCachedData(cacheName: string, url: string, maxAge = 0) {
+    if (!("caches" in window)) {
+        const response = await fetch(url);
+        return response?.ok ? await response.text() : false;
+    }
     const cacheStorage = await caches.open(cacheName);
     const cachedResponse = await cacheStorage.match(url);
 
