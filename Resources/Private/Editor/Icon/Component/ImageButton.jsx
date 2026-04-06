@@ -14,7 +14,7 @@ const styles = stylex.create({
         padding: "var(--spacing-Full)",
         gap: "var(--spacing-Half)",
         cursor: "pointer",
-        border: "none",
+        borderWidth: 0,
         backgroundColor: "var(--colors-ContrastNeutral)",
         transition: "background-color 0.2s ease-in-out",
         maxWidth: 200,

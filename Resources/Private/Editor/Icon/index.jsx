@@ -29,7 +29,7 @@ const styles = stylex.create({
     primaryButton: {
         textAlign: "left",
         backgroundColor: "var(--colors-ContrastNeutral)",
-        border: 0,
+        borderWidth: 0,
         cursor: "pointer",
         minHeight: 40,
         maxHeight: 40,
