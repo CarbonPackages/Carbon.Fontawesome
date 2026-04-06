@@ -1,14 +1,11 @@
 import esbuild from "esbuild";
 import extensibilityMap from "@neos-project/neos-ui-extensibility/extensibilityMap.json" with { type: "json" };
-import stylexPlugin from "@stylexjs/esbuild-plugin";
-import path from "node:path";
-import { fileURLToPath } from "url";
+import stylex from "@stylexjs/unplugin";
 
 const watch = process.argv.includes("--watch");
 const dev = process.argv.includes("--dev");
 const editor = process.argv.includes("--editor");
 const minify = !dev && !watch;
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 /** @type {import("esbuild").BuildOptions} */
 const defaultOptions = {
@@ -37,16 +34,15 @@ const options = [
         loader: {
             ".js": "jsx",
         },
+        metafile: true,
         plugins: [
-            stylexPlugin({
-                classNamePrefix: "fontawesome-",
+            stylex.esbuild({
                 useCSSLayers: false,
+                classNamePrefix: "fontawesome-",
                 dev: false,
-                generatedCSSFileName: path.resolve(
-                    __dirname,
-                    "Resources/Public/Editor/Main.css",
-                ),
-                stylexImports: ["@stylexjs/stylex"],
+                lightningcssOptions: {
+                    minify: true,
+                },
             }),
         ],
     },

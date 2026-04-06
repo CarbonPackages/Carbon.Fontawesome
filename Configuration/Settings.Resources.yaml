@@ -14,6 +14,6 @@ Neos:
               type: 'module'
         stylesheets:
           Carbon.Fontawesome.Editor:
-            resource: resource://Carbon.Fontawesome/Public/Editor/Main.css
+            resource: resource://Carbon.Fontawesome/Public/Editor/stylex.css
           Carbon.Fontawesome.Styles:
             resource: resource://Carbon.Fontawesome/Public/Styles/Main.css
